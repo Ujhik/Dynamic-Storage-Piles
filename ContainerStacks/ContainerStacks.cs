@@ -1,30 +1,37 @@
 ﻿using BepInEx;
+using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
+using UnityEngine;
 
-namespace ContainerStacks
-{
-    [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
+namespace ContainerStacks {
+    [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
-    //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class ContainerStacks : BaseUnityPlugin
-    {
-        public const string PluginGUID = "com.jotunn.jotunnmodstub";
+    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
+    internal class ContainerStacks : BaseUnityPlugin {
         public const string PluginName = "ContainerStacks";
+        public const string PluginGuid = "com.maxsch.valheim.ContainerStacks";
         public const string PluginVersion = "0.0.1";
-        
-        // Use this class to add your own localization to the game
-        // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
+
+        private static AssetBundle assetBundle;
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
-        private void Awake()
-        {
-            // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
-            Jotunn.Logger.LogInfo("ModStub has landed");
-            
-            // To learn more about Jotunn's features, go to
-            // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+        private void Awake() {
+            assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
+
+            AddPiece("MS_container_wood_stack", "Wood");
+        }
+
+        private void AddPiece(string pieceName, string craftItem) {
+            PieceManager.Instance.AddPiece(new CustomPiece(assetBundle, pieceName, true, StackConfig(craftItem)));
+        }
+
+        private PieceConfig StackConfig(string item) {
+            PieceConfig stackConfig = new PieceConfig();
+            stackConfig.PieceTable = PieceTables.Hammer;
+            stackConfig.AddRequirement(new RequirementConfig(item, 5, 0, true));
+            return stackConfig;
         }
     }
 }
