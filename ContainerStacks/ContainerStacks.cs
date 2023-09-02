@@ -22,6 +22,7 @@ namespace ContainerStacks {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
 
             AddPiece("MS_container_wood_stack", "Wood");
+            AddPiece("MS_container_finewood_stack", "FineWood");
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();

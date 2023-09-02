@@ -304,7 +304,7 @@ MonoBehaviour:
   - {fileID: 4293881464568813221}
   - {fileID: 1975948690123482842}
   - {fileID: 4483691840555840282}
---- !u!65 &579711881468916212
+--- !u!65 &5458321688196622784
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,9 +315,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.5060615}
-  m_Center: {x: 6.809168e-16, y: 0.25, z: 0.9189693}
---- !u!65 &7225717576125817499
+  m_Size: {x: 2.070585, y: 0.50556695, z: 0.5177651}
+  m_Center: {x: 0.051157504, y: 0.20937149, z: 0.9066665}
+--- !u!65 &6682083999389643562
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,9 +328,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.50715256}
-  m_Center: {x: -1.0954395e-15, y: 0.25, z: 0.44842368}
---- !u!65 &8834392632619353835
+  m_Size: {x: 2.070585, y: 0.46277398, z: 0.52436405}
+  m_Center: {x: -0.053979516, y: 0.222491, z: 0.437349}
+--- !u!65 &4676929131428629286
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -341,9 +341,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.4934231}
-  m_Center: {x: -1.2972303e-17, y: 0.25, z: -0.0069210515}
---- !u!65 &7499942425652951504
+  m_Size: {x: 2.0705848, y: 0.46277398, z: 0.524364}
+  m_Center: {x: 0.008680403, y: 0.222491, z: -0.008560002}
+--- !u!65 &7019541903442283238
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,9 +354,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.4761005}
-  m_Center: {x: -1.0954394e-15, y: 0.25, z: -0.48477146}
---- !u!65 &2471502902935659366
+  m_Size: {x: 2.070585, y: 0.46277398, z: 0.52436405}
+  m_Center: {x: 0.1296165, y: 0.222491, z: -0.50328803}
+--- !u!65 &6553299157958301711
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,9 +367,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.47064674}
-  m_Center: {x: 6.80917e-16, y: 0.24999999, z: -1.0218861}
---- !u!65 &5935893023527646439
+  m_Size: {x: 2.070585, y: 0.46277398, z: 0.5243639}
+  m_Center: {x: 0.055491477, y: 0.222491, z: -1.035841}
+--- !u!65 &3541799893683598547
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,9 +380,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.44617546}
-  m_Center: {x: -1.9185123e-15, y: 0.6, z: 0.7605261}
---- !u!65 &1317714641495928768
+  m_Size: {x: 2.0705848, y: 0.462774, z: 0.524364}
+  m_Center: {x: 0.008680403, y: 0.60821295, z: 0.72835195}
+--- !u!65 &4295520115250522080
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,9 +393,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.44805622}
-  m_Center: {x: -1.4215574e-16, y: 0.6, z: 0.29867506}
---- !u!65 &8592584655783714484
+  m_Size: {x: 2.0705838, y: 0.462774, z: 0.524364}
+  m_Center: {x: -0.11215502, y: 0.60821295, z: 0.26450902}
+--- !u!65 &6504885240426065546
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,9 +406,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.4374826}
-  m_Center: {x: -1.4215574e-16, y: 0.6, z: -0.21269383}
---- !u!65 &6329443761259174533
+  m_Size: {x: 2.0705848, y: 0.462774, z: 0.524364}
+  m_Center: {x: 0.008680403, y: 0.60821295, z: -0.24101101}
+--- !u!65 &8230442909038944941
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,9 +419,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.45623767}
-  m_Center: {x: -1.918512e-15, y: 0.6, z: -0.7315897}
---- !u!65 &7450562877184103760
+  m_Size: {x: 2.0705848, y: 0.462774, z: 0.52436405}
+  m_Center: {x: 0.008680403, y: 0.60821295, z: -0.76451504}
+--- !u!65 &1058510481327365981
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -432,9 +432,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.48272365}
-  m_Center: {x: -8.2904514e-16, y: 1, z: 0.56537175}
---- !u!65 &2732880247537417297
+  m_Size: {x: 2.083693, y: 0.5498998, z: 0.58346695}
+  m_Center: {x: 0.01285553, y: 0.9799479, z: 0.5072454}
+--- !u!65 &8945950929187939027
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -445,9 +445,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.46342134}
-  m_Center: {x: 5.9133064e-17, y: 1, z: 0.04577567}
---- !u!65 &6499511357135701735
+  m_Size: {x: 2.0705848, y: 0.46277404, z: 0.524364}
+  m_Center: {x: 0.008680403, y: 0.951893, z: 0.0063109994}
+--- !u!65 &4904598070479699915
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,5 +458,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.5, z: 0.48669872}
-  m_Center: {x: -8.2904514e-16, y: 1, z: -0.54114485}
+  m_Size: {x: 2.0748749, y: 0.49760294, z: 0.545869}
+  m_Center: {x: 0.0602715, y: 0.9695815, z: -0.5619455}
