@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -21,6 +22,9 @@ namespace ContainerStacks {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
 
             AddPiece("MS_container_wood_stack", "Wood");
+
+            Harmony harmony = new Harmony(PluginGuid);
+            harmony.PatchAll();
         }
 
         private void AddPiece(string pieceName, string craftItem) {
@@ -30,7 +34,7 @@ namespace ContainerStacks {
         private PieceConfig StackConfig(string item) {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;
-            stackConfig.AddRequirement(new RequirementConfig(item, 5, 0, true));
+            stackConfig.AddRequirement(new RequirementConfig(item, 10, 0, true));
             return stackConfig;
         }
     }

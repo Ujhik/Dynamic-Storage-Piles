@@ -81,9 +81,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerItemLimit.cs" />
+    <Compile Include="InventoryHelper.cs" />
+    <Compile Include="Patches\InventoryPatch.cs" />
+    <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="ContainerStacks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualStack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -104,10 +109,13 @@
     <FULL_DEPLOY_FOLDER>$(DEPLOY_FOLDER)/BepInEx/plugins/$(TargetName)</FULL_DEPLOY_FOLDER>
     <FULL_DEPLOY_FOLDER_XBOX>$(DEPLOY_FOLDER_XBOX)/BepInEx/plugins/$(TargetName)</FULL_DEPLOY_FOLDER_XBOX>
     <TMP_DEPLOY_FOLDER>$(TargetDir)/tmp</TMP_DEPLOY_FOLDER>
+    <VALHEIM_MANAGED>$(VALHEIM_INSTALL)/valheim_Data/Managed</VALHEIM_MANAGED>
+    <UNITY_FOLDER>$(SolutionDir)ContainerStacksUnity</UNITY_FOLDER>
   </PropertyGroup>
   <Target Name="AfterBuild">
     <CallTarget Targets="Prepare" />
     <CallTarget Condition="Exists('$(DEPLOY_FOLDER)')" Targets="Deploy" />
+    <CallTarget Targets="CopyToUnity" />
   </Target>
   <Target Name="Prepare">
 <!--    <Exec Command="$(SolutionDir)Libs/pdb2mdb.exe $(TargetPath)" />-->
@@ -135,5 +143,29 @@
     <!--Unpack to deploy folder-->
     <Unzip Condition="Exists('$(DEPLOY_FOLDER)')" SourceFiles="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" DestinationFolder="$(FULL_DEPLOY_FOLDER)" />
     <Unzip Condition="Exists('$(DEPLOY_FOLDER_XBOX)')" SourceFiles="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" DestinationFolder="$(FULL_DEPLOY_FOLDER_XBOX)" />
+  </Target>
+  <Target Name="CopyToUnity">
+    <Message Text="Copy To Unity" Importance="high" />
+    <Copy SourceFiles="$(VALHEIM_INSTALL)/BepInEx/core/BepInEx.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_INSTALL)/BepInEx/core/0Harmony.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_INSTALL)/BepInEx/core/Mono.Cecil.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_INSTALL)/BepInEx/core/MonoMod.Utils.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_INSTALL)/BepInEx/core/MonoMod.RuntimeDetour.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(TargetDir)Jotunn.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+<!--    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />-->
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_valheim.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_utils.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_postprocessing.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_sunshafts.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_guiutils.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_steamworks.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_googleanalytics.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/PlayFab.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/PlayFabParty.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/Fishlabs.Core.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/Fishlabs.Common.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/ConnectedStorage.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
   </Target>
 </Project>
