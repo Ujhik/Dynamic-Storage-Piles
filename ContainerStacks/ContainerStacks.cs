@@ -24,6 +24,7 @@ namespace ContainerStacks {
             AddPiece("MS_container_wood_stack", "Wood");
             AddPiece("MS_container_finewood_stack", "FineWood");
             AddPiece("MS_container_corewood_stack", "RoundLog");
+            AddPiece("MS_container_stone_pile", "Stone");
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
