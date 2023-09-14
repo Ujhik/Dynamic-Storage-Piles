@@ -81,9 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContainerItemLimit.cs" />
     <Compile Include="InventoryHelper.cs" />
-    <Compile Include="Patches\InventoryPatch.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="ContainerStacks.cs" />

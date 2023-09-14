@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 114600209582961994}
   - component: {fileID: 5304200018213044763}
   - component: {fileID: 114537258803677328}
-  - component: {fileID: 1853348060249034796}
   m_Layer: 10
   m_Name: MS_container_wood_stack
   m_TagString: Untagged
@@ -274,19 +273,6 @@ MonoBehaviour:
     m_effectPrefabs: []
   m_autoCreateFragments: 0
   m_fragmentRoots: []
---- !u!114 &1853348060249034796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1869662453001657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 47546408, guid: 87e55fd3ffd5ac347b0beb18b3d46522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allowedItemName: Wood
 --- !u!1001 &518022749278472757
 PrefabInstance:
   m_ObjectHideFlags: 0
