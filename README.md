@@ -43,5 +43,5 @@ See [contributing](https://github.com/MSchmoecker/ValheimHopper/blob/master/CONT
 
 ## Changelog
 
-0.0.1
+0.1.0
 - Release
