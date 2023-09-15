@@ -1,5 +1,6 @@
 # Dynamic Storage Piles
 
+
 ## About
 Adds stacks and piles as new container pieces. Their appearance changes depending on the fill level.
 
@@ -21,7 +22,7 @@ Vanilla stacks and piles models are used:
 
 ![StackOverview](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/StackOverview.png)
 
-Depending on the level, more items will be displayed on the stack:
+Depending on the inventory fill level, more items will be displayed on the stack:
 
 ![StackOverview](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/StateShowcase.png)
 
@@ -34,11 +35,11 @@ Extract the content of `DynamicStoragePiles` into the `BepInEx/plugins` folder o
 ## Links
 - [Thunderstore](https://valheim.thunderstore.io/package/MSchmoecker/DynamicStoragePiles/)
 - [Github](https://github.com/MSchmoecker/Dynamic-Storage-Piles)
-- Discord: Margmas#9562. Feel free to DM or ping me about feedback or questions, for example in the [Jötunn discord](https://discord.gg/DdUt6g7gyA)
+- Discord: Margmas. Feel free to DM or ping me about feedback or questions, for example in the [Jötunn discord](https://discord.gg/DdUt6g7gyA)
 
 
 ## Development
-See [contributing](https://github.com/MSchmoecker/ValheimHopper/blob/master/CONTRIBUTING.md).
+See [contributing](https://github.com/MSchmoecker/Dynamic-Storage-Piles/blob/master/CONTRIBUTING.md).
 
 
 ## Changelog
