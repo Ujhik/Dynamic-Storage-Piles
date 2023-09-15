@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2807814708797688730}
   - component: {fileID: 5816460291550527348}
   - component: {fileID: 7243819514372320361}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MS_container_finewood_stack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

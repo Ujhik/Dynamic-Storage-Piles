@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8853468678921156230}
   - component: {fileID: 4955123450975686335}
   - component: {fileID: 7881972634953756469}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MS_container_corewood_stack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,6 +384,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Broken
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914566542571793052, guid: 974b0382b9ffc464690bbd90d1e81b36,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 974b0382b9ffc464690bbd90d1e81b36, type: 3}
