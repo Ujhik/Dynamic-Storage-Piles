@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace ContainerStacks.Patches {
+namespace DynamicStoragePiles.Patches {
     [HarmonyPatch]
     public class PlacementPatch {
         [HarmonyPatch(typeof(Player), nameof(Player.SetupPlacementGhost)), HarmonyPostfix]

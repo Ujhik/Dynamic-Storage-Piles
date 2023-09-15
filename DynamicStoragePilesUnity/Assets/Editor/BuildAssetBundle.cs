@@ -11,7 +11,7 @@ public class BuildAssetBundle : MonoBehaviour {
         string assetBundlePath = Path.Combine(assetBundleOutputPath, "containerstacks");
 
         BuildPipeline.BuildAssetBundles(assetBundleOutputPath, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
-        FileUtil.ReplaceFile(assetBundlePath, "../ContainerStacks/containerstacks");
+        FileUtil.ReplaceFile(assetBundlePath, "../DynamicStoragePiles/containerstacks");
     }
 
     [MenuItem("Assets/Create Procedural Mesh")]

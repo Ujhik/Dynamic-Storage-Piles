@@ -7,8 +7,8 @@
     <ProjectGuid>{DEAF4438-8089-40ED-8175-398E1261D45B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContainerStacks</RootNamespace>
-    <AssemblyName>ContainerStacks</AssemblyName>
+    <RootNamespace>DynamicStoragePiles</RootNamespace>
+    <AssemblyName>DynamicStoragePiles</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -84,14 +84,13 @@
     <Compile Include="InventoryHelper.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
-    <Compile Include="ContainerStacks.cs" />
+    <Compile Include="DynamicStoragePiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualStack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="containerstacks" />
@@ -108,15 +107,11 @@
     <FULL_DEPLOY_FOLDER_XBOX>$(DEPLOY_FOLDER_XBOX)/BepInEx/plugins/$(TargetName)</FULL_DEPLOY_FOLDER_XBOX>
     <TMP_DEPLOY_FOLDER>$(TargetDir)/tmp</TMP_DEPLOY_FOLDER>
     <VALHEIM_MANAGED>$(VALHEIM_INSTALL)/valheim_Data/Managed</VALHEIM_MANAGED>
-    <UNITY_FOLDER>$(SolutionDir)ContainerStacksUnity</UNITY_FOLDER>
+    <UNITY_FOLDER>$(SolutionDir)DynamicStoragePilesUnity</UNITY_FOLDER>
   </PropertyGroup>
   <Target Name="AfterBuild">
-    <CallTarget Targets="Prepare" />
     <CallTarget Condition="Exists('$(DEPLOY_FOLDER)')" Targets="Deploy" />
     <CallTarget Targets="CopyToUnity" />
-  </Target>
-  <Target Name="Prepare">
-<!--    <Exec Command="$(SolutionDir)Libs/pdb2mdb.exe $(TargetPath)" />-->
   </Target>
   <Target Name="Deploy">
     <Message Text="Deploing into: $(FULL_DEPLOY_FOLDER)" Importance="high" />
@@ -125,17 +120,14 @@
     <!--Create Thunderstore Zip-->
     <RemoveDir Directories="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
-<!--    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />-->
     <Copy SourceFiles="$(SolutionDir)Package/icon.png" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
-    <Copy SourceFiles="$(SolutionDir)Package/README.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
-<!--    <Copy SourceFiles="$(SolutionDir)Package/CHANGELOG.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />-->
+    <Copy SourceFiles="$(SolutionDir)README.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/manifest.json" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <ZipDirectory SourceDirectory="$(TMP_DEPLOY_FOLDER)" DestinationFile="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" Overwrite="true" />
 
     <!--Create Nexus Zip-->
     <RemoveDir Directories="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(TMP_DEPLOY_FOLDER)/plugins/$(TargetName)" />
-<!--    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(TMP_DEPLOY_FOLDER)/plugins/$(TargetName)" />-->
     <ZipDirectory SourceDirectory="$(TMP_DEPLOY_FOLDER)" DestinationFile="$(FULL_DEPLOY_FOLDER)/$(TargetName)-Nexus.zip" Overwrite="true" />
 
     <!--Unpack to deploy folder-->
@@ -152,7 +144,6 @@
     <Copy SourceFiles="$(TargetDir)Jotunn.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
-<!--    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />-->
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_valheim.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_utils.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_postprocessing.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />

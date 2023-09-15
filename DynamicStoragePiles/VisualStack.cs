@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ContainerStacks {
+namespace DynamicStoragePiles {
     public class VisualStack : MonoBehaviour {
         public List<Transform> stackMeshes;
         private Container container;

@@ -1,6 +1,6 @@
 ﻿using Jotunn;
 
-namespace ContainerStacks {
+namespace DynamicStoragePiles {
     public static class InventoryHelper {
         public static string PrefabName(this ItemDrop.ItemData item) {
             if (item.m_dropPrefab) {

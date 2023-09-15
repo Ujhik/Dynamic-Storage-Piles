@@ -6,14 +6,14 @@ using Jotunn.Managers;
 using Jotunn.Utils;
 using UnityEngine;
 
-namespace ContainerStacks {
+namespace DynamicStoragePiles {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class ContainerStacks : BaseUnityPlugin {
-        public const string PluginName = "ContainerStacks";
-        public const string PluginGuid = "com.maxsch.valheim.ContainerStacks";
-        public const string PluginVersion = "0.0.1";
+    internal class DynamicStoragePiles : BaseUnityPlugin {
+        public const string PluginName = "DynamicStoragePiles";
+        public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";
+        public const string PluginVersion = "0.0.1"; 
 
         private static AssetBundle assetBundle;
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
