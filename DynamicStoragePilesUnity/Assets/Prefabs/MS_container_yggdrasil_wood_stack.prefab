@@ -310,6 +310,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Worn
       objectReference: {fileID: 0}
+    - target: {fileID: 4013302258559671995, guid: 148108b34536b0c4e810ae34d1ee09a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4393768897942684673, guid: 148108b34536b0c4e810ae34d1ee09a7,
         type: 3}
       propertyPath: m_RootOrder
@@ -470,6 +475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Broken
+      objectReference: {fileID: 0}
+    - target: {fileID: 4013302258559671995, guid: 148108b34536b0c4e810ae34d1ee09a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4393768897942684673, guid: 148108b34536b0c4e810ae34d1ee09a7,
         type: 3}

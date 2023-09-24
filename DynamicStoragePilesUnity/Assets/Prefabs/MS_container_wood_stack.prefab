@@ -390,6 +390,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Broken
       objectReference: {fileID: 0}
+    - target: {fileID: 6864055104456677723, guid: 6fa1aefd70347c54eb1611d6b33ee68f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7731843363762559135, guid: 6fa1aefd70347c54eb1611d6b33ee68f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -611,6 +616,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Worn
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864055104456677723, guid: 6fa1aefd70347c54eb1611d6b33ee68f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7731843363762559135, guid: 6fa1aefd70347c54eb1611d6b33ee68f,
         type: 3}

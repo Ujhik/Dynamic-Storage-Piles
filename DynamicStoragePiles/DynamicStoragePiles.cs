@@ -1,4 +1,6 @@
-﻿using BepInEx;
+﻿using System.Collections;
+using System.Collections.Generic;
+using BepInEx;
 using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
@@ -16,7 +18,9 @@ namespace DynamicStoragePiles {
         public const string PluginVersion = "0.1.0";
 
         private static AssetBundle assetBundle;
-        public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+        private List<CustomPiece> pieces = new List<CustomPiece>();
+
+        // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
@@ -29,12 +33,46 @@ namespace DynamicStoragePiles {
             AddPiece("MS_container_yggdrasil_wood_stack", "YggdrasilWood");
             AddPiece("MS_container_blackmarble_pile", "BlackMarble");
 
+            PieceManager.OnPiecesRegistered += OnPiecesRegistered;
+
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
         }
 
         private void AddPiece(string pieceName, string craftItem) {
-            PieceManager.Instance.AddPiece(new CustomPiece(assetBundle, pieceName, true, StackConfig(craftItem)));
+            CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, StackConfig(craftItem));
+            pieces.Add(piece);
+            PieceManager.Instance.AddPiece(piece);
+        }
+
+        private void OnPiecesRegistered() {
+            PieceManager.OnPiecesRegistered -= OnPiecesRegistered;
+
+            foreach (CustomPiece piece in pieces) {
+                StartCoroutine(RenderSprite(piece));
+            }
+        }
+
+        private IEnumerator RenderSprite(CustomPiece piece) {
+            yield return null;
+
+            var visualStacks = piece.Piece.GetComponentsInChildren<VisualStack>();
+
+            foreach (VisualStack visualStack in visualStacks) {
+                visualStack.SetVisualsActive(55f);
+            }
+
+            piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
+                Width = 64,
+                Height = 64,
+                Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
+                UseCache = true,
+                TargetPlugin = Info.Metadata,
+            });
+
+            foreach (VisualStack visualStack in visualStacks) {
+                visualStack.SetVisualsActive(100f);
+            }
         }
 
         private PieceConfig StackConfig(string item) {

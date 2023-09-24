@@ -17,19 +17,16 @@ namespace DynamicStoragePiles {
 
             if (inventory != null) {
                 inventory.m_onChanged += UpdateVisuals;
+                UpdateVisuals();
             }
-
-            UpdateVisuals();
         }
 
         private void UpdateVisuals() {
-            List<ItemDrop.ItemData> items = inventory?.GetAllItems();
+            SetVisualsActive(inventory.SlotsUsedPercentage());
+        }
 
-            if (items == null) {
-                return;
-            }
-
-            float fillCount = Mathf.Ceil(inventory.SlotsUsedPercentage() / 100f * stackMeshes.Count);
+        public void SetVisualsActive(float fillPercentage) {
+            float fillCount = Mathf.Ceil(fillPercentage / 100f * stackMeshes.Count);
 
             for (int i = 0; i < stackMeshes.Count; i++) {
                 bool active = i == 0 || i < fillCount;
