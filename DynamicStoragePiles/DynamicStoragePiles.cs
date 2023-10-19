@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
@@ -20,6 +21,8 @@ namespace DynamicStoragePiles {
         private static AssetBundle assetBundle;
         private List<CustomPiece> pieces = new List<CustomPiece>();
 
+        private static ConfigEntry<bool> disableVanillaRecipes;
+
         // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
@@ -34,10 +37,47 @@ namespace DynamicStoragePiles {
             AddPiece("MS_container_blackmarble_pile", "BlackMarble");
             AddPiece("MS_container_coin_pile", "Coins");
 
+            disableVanillaRecipes = Config.Bind("General", "Disable Vanilla Stack Recipes", false, "Prevents vanilla stack pieces from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            disableVanillaRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
+            PrefabManager.OnPrefabsRegistered += () => DisablePieceRecipes(false);
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
+        }
+
+        private static void DisablePieceRecipes(bool forceUpdate) {
+            if (!ZNetScene.instance) {
+                return;
+            }
+
+            bool disableRecipes = disableVanillaRecipes.Value;
+
+            if (forceUpdate || disableRecipes) {
+                TogglePieceRecipes("wood_stack", !disableRecipes);
+                TogglePieceRecipes("wood_fine_stack", !disableRecipes);
+                TogglePieceRecipes("wood_core_stack", !disableRecipes);
+                TogglePieceRecipes("wood_yggdrasil_stack", !disableRecipes);
+                TogglePieceRecipes("stone_pile", !disableRecipes);
+                TogglePieceRecipes("coal_pile", !disableRecipes);
+                TogglePieceRecipes("blackmarble_pile", !disableRecipes);
+                TogglePieceRecipes("treasure_stack", !disableRecipes);
+            }
+
+            if (Player.m_localPlayer) {
+                Player.m_localPlayer.UpdateAvailablePiecesList();
+            }
+        }
+
+        private static void TogglePieceRecipes(string prefabName, bool enabled) {
+            GameObject prefab = ZNetScene.instance.GetPrefab(prefabName);
+
+            if (prefab && prefab.TryGetComponent(out Piece piece)) {
+                piece.m_enabled = enabled;
+            } else {
+                Jotunn.Logger.LogWarning($"Could not find Piece {prefabName} to toggle recipes");
+            }
         }
 
         private void AddPiece(string pieceName, string craftItem) {
