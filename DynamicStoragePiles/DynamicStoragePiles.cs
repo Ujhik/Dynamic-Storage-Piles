@@ -28,9 +28,9 @@ namespace DynamicStoragePiles {
             AddPiece("MS_container_wood_stack", "Wood");
             AddPiece("MS_container_finewood_stack", "FineWood");
             AddPiece("MS_container_corewood_stack", "RoundLog");
+            AddPiece("MS_container_yggdrasil_wood_stack", "YggdrasilWood");
             AddPiece("MS_container_stone_pile", "Stone");
             AddPiece("MS_container_coal_pile", "Coal");
-            AddPiece("MS_container_yggdrasil_wood_stack", "YggdrasilWood");
             AddPiece("MS_container_blackmarble_pile", "BlackMarble");
             AddPiece("MS_container_coin_pile", "Coins");
 
