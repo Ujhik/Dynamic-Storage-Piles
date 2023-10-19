@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using HarmonyLib;
 using Jotunn.Configs;
@@ -18,12 +19,14 @@ namespace DynamicStoragePiles {
         public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";
         public const string PluginVersion = "0.2.0";
 
+        public static Harmony harmony;
+
         private static AssetBundle assetBundle;
         private List<CustomPiece> pieces = new List<CustomPiece>();
 
-        private static ConfigEntry<bool> disableVanillaRecipes;
-
-        // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+        public static ConfigEntry<bool> disableVanillaRecipes;
+        public static ConfigEntry<bool> azuAutoStoreCompat;
+        public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
 
         private void Awake() {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
@@ -37,14 +40,23 @@ namespace DynamicStoragePiles {
             AddPiece("MS_container_blackmarble_pile", "BlackMarble");
             AddPiece("MS_container_coin_pile", "Coins");
 
-            disableVanillaRecipes = Config.Bind("General", "Disable Vanilla Stack Recipes", false, "Prevents vanilla stack pieces from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            disableVanillaRecipes = Config.Bind("1 - General", "Disable Vanilla Stack Recipes", false, "Prevents vanilla stack pieces from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
             disableVanillaRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
+            azuAutoStoreCompat = Config.Bind("2 - Compatibility", "AzuAutoStore Compatibility", true, "Enables compatibility with AzuAutoStore. Requires a restart to take effect");
+            azuAutoStoreItemWhitelist = Config.Bind("2 - Compatibility", "AzuAutoStore Item Whitelist", true, "Only allows the respective items to be stored in stack piles");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
             PrefabManager.OnPrefabsRegistered += () => DisablePieceRecipes(false);
 
-            Harmony harmony = new Harmony(PluginGuid);
+            harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
+        }
+
+        private void Start() {
+            if (Chainloader.PluginInfos.ContainsKey("Azumatt.AzuAutoStore") && azuAutoStoreCompat.Value) {
+                Compatibility.AzuAutoStore.Init();
+            }
         }
 
         private static void DisablePieceRecipes(bool forceUpdate) {
@@ -121,6 +133,38 @@ namespace DynamicStoragePiles {
             stackConfig.PieceTable = PieceTables.Hammer;
             stackConfig.AddRequirement(new RequirementConfig(item, 10, 0, true));
             return stackConfig;
+        }
+
+        public static bool IsStackPiece(string pieceName, out string allowedItem) {
+            switch (pieceName) {
+                case "MS_container_wood_stack":
+                    allowedItem = "Wood";
+                    return true;
+                case "MS_container_finewood_stack":
+                    allowedItem = "FineWood";
+                    return true;
+                case "MS_container_corewood_stack":
+                    allowedItem = "RoundLog";
+                    return true;
+                case "MS_container_yggdrasil_wood_stack":
+                    allowedItem = "YggdrasilWood";
+                    return true;
+                case "MS_container_stone_pile":
+                    allowedItem = "Stone";
+                    return true;
+                case "MS_container_coal_pile":
+                    allowedItem = "Coal";
+                    return true;
+                case "MS_container_blackmarble_pile":
+                    allowedItem = "BlackMarble";
+                    return true;
+                case "MS_container_coin_pile":
+                    allowedItem = "Coins";
+                    return true;
+                default:
+                    allowedItem = string.Empty;
+                    return false;
+            }
         }
     }
 }
