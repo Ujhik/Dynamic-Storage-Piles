@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DynamicStoragePiles {
     public class VisualStack : MonoBehaviour {
-        public List<Transform> stackMeshes;
+        public List<Transform> stackMeshes = new List<Transform>();
         private Container container;
         private Inventory inventory;
 

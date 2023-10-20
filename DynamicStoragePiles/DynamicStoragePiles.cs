@@ -19,6 +19,7 @@ namespace DynamicStoragePiles {
         public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";
         public const string PluginVersion = "0.3.0";
 
+        public static DynamicStoragePiles Instance { get; private set; }
         public static Harmony harmony;
 
         private static AssetBundle assetBundle;
@@ -29,6 +30,7 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
 
         private void Awake() {
+            Instance = this;
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
 
             AddPiece("MS_container_wood_stack", "Wood");
@@ -56,6 +58,10 @@ namespace DynamicStoragePiles {
         private void Start() {
             if (Chainloader.PluginInfos.ContainsKey("Azumatt.AzuAutoStore") && azuAutoStoreCompat.Value) {
                 Compatibility.AzuAutoStore.Init();
+            }
+
+            if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
+                Compatibility.IngotStacks.Init();
             }
         }
 
@@ -98,6 +104,12 @@ namespace DynamicStoragePiles {
             PieceManager.Instance.AddPiece(piece);
         }
 
+        public void AddPiece(GameObject prefab, string craftItem, int amount) {
+            CustomPiece piece = new CustomPiece(prefab, false, StackConfig(craftItem, amount));
+            pieces.Add(piece);
+            PieceManager.Instance.AddPiece(piece);
+        }
+
         private void OnPiecesRegistered() {
             PieceManager.OnPiecesRegistered -= OnPiecesRegistered;
 
@@ -128,10 +140,10 @@ namespace DynamicStoragePiles {
             }
         }
 
-        private PieceConfig StackConfig(string item) {
+        private PieceConfig StackConfig(string item, int amount = 10) {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;
-            stackConfig.AddRequirement(new RequirementConfig(item, 10, 0, true));
+            stackConfig.AddRequirement(new RequirementConfig(item, amount, 0, true));
             return stackConfig;
         }
 
