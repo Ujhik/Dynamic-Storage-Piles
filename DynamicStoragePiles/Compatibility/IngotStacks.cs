@@ -1,6 +1,6 @@
-﻿using Jotunn.Managers;
+﻿using Jotunn;
+using Jotunn.Managers;
 using UnityEngine;
-using Logger = Jotunn.Logger;
 
 namespace DynamicStoragePiles.Compatibility {
     public static class IngotStacks {
@@ -12,22 +12,24 @@ namespace DynamicStoragePiles.Compatibility {
         }
 
         private static void ConvertToPiece(string baseAssetName, string vfxName, string newPrefabName, string resource) {
-            GameObject vfx = FindDestroyVFX(assetBundle.LoadAsset<GameObject>(baseAssetName), vfxName);
+            GameObject basePrefab = assetBundle.LoadAsset<GameObject>(baseAssetName);
+            GameObject vfx = FindDestroyVFX(basePrefab, vfxName);
             GameObject stack = PrefabManager.Instance.CreateClonedPrefab(newPrefabName, vfx);
-            stack = PreparePiecePrefab(stack);
-            DynamicStoragePiles.Instance.AddPiece(stack, resource, 1);
+            stack = PreparePiecePrefab(stack, basePrefab, $"${baseAssetName}");
+            DynamicStoragePiles.Instance.AddPiece(stack, resource, 3);
         }
 
-        private static GameObject PreparePiecePrefab(GameObject prefab) {
+        private static GameObject PreparePiecePrefab(GameObject prefab, GameObject basePrefab, string nameToken) {
             Object.Destroy(prefab.GetComponent<Gibber>());
 
             ZNetView nview = prefab.GetComponent<ZNetView>();
             nview.m_persistent = true;
 
-            Piece piece = prefab.AddComponent<Piece>();
-            piece.m_icon = Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 1f, 1f), Vector2.zero);
+            prefab.AddComponentCopy(basePrefab.GetComponent<Piece>());
+            prefab.AddComponentCopy(basePrefab.GetComponent<WearNTear>());
 
             Container container = prefab.AddComponent<Container>();
+            container.m_name = nameToken;
             container.m_width = 5;
             container.m_height = 2;
 
@@ -37,8 +39,6 @@ namespace DynamicStoragePiles.Compatibility {
                 child.gameObject.AddComponent<BoxCollider>();
                 visualStack.stackMeshes.Add(child);
             }
-
-            // WearNTear wearNTear = stack.AddComponent<WearNTear>();
 
             return prefab;
         }
