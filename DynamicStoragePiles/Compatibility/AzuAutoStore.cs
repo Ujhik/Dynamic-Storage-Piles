@@ -1,29 +1,56 @@
-﻿using HarmonyLib;
+﻿using BepInEx;
+using BepInEx.Bootstrap;
+using HarmonyLib;
 
 namespace DynamicStoragePiles.Compatibility {
     public static class AzuAutoStore {
         public static void Init() {
-            DynamicStoragePiles.harmony.PatchAll(typeof(AzuAutoStore));
+            PluginInfo info = Chainloader.PluginInfos["Azumatt.AzuAutoStore"];
+
+            if (info.Metadata.Version >= new System.Version(2, 0, 0)) {
+                DynamicStoragePiles.harmony.PatchAll(typeof(AzuAutoStore_After_2_0_0));
+            } else {
+                DynamicStoragePiles.harmony.PatchAll(typeof(AzuAutoStore_Before_2_0_0));
+            }
         }
 
-        [HarmonyPatch("AzuAutoStore.Util.Functions, AzuAutoStore", "CheckDisallowedItems"), HarmonyPostfix]
-        private static void CheckDisallowedItemsPatch(Container container, ItemDrop.ItemData item, ref bool __result) {
-            if (__result) {
-                return;
+        private static class AzuAutoStore_After_2_0_0 {
+            [HarmonyPatch("AzuAutoStore.Util.Boxes, AzuAutoStore", "CanItemBeStored"), HarmonyPostfix]
+            private static void CanItemBeStoredPatch(string container, string prefab, ref bool __result) {
+                if (!__result) {
+                    return;
+                }
+
+                if (!DynamicStoragePiles.azuAutoStoreItemWhitelist.Value) {
+                    return;
+                }
+
+                if (DynamicStoragePiles.IsStackPiece(container, out string allowedItem) && prefab != allowedItem) {
+                    __result = false;
+                }
             }
+        }
 
-            if (!DynamicStoragePiles.azuAutoStoreItemWhitelist.Value) {
-                return;
-            }
+        private static class AzuAutoStore_Before_2_0_0 {
+            [HarmonyPatch("AzuAutoStore.Util.Functions, AzuAutoStore", "CheckDisallowedItems"), HarmonyPostfix]
+            private static void CheckDisallowedItemsPatch(Container container, ItemDrop.ItemData item, ref bool __result) {
+                if (__result) {
+                    return;
+                }
 
-            if (!container || item == null || !item.m_dropPrefab) {
-                return;
-            }
+                if (!DynamicStoragePiles.azuAutoStoreItemWhitelist.Value) {
+                    return;
+                }
 
-            string prefabName = Utils.GetPrefabName(container.name);
+                if (!container || item == null || !item.m_dropPrefab) {
+                    return;
+                }
 
-            if (DynamicStoragePiles.IsStackPiece(prefabName, out string allowedItem) && item.m_dropPrefab.name != allowedItem) {
-                __result = true;
+                string prefabName = Utils.GetPrefabName(container.name);
+
+                if (DynamicStoragePiles.IsStackPiece(prefabName, out string allowedItem) && item.m_dropPrefab.name != allowedItem) {
+                    __result = true;
+                }
             }
         }
     }

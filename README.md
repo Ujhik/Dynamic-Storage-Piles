@@ -97,6 +97,7 @@ See [contributing](https://github.com/MSchmoecker/Dynamic-Storage-Piles/blob/mas
 0.4.0
 - Added [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) integration when both mods are installed
 - Added mod enforcement to all players if the mod is installed on the server
+- Fixed compatibility with the AzuAutoStore 2.0.0 update
 
 0.3.0
 - Added the config option to disable vanilla stack pile recipes, making them not buildable with the hammer. Disabled by default
