@@ -130,13 +130,15 @@ namespace DynamicStoragePiles {
                 visualStack.SetVisualsActive(55f);
             }
 
-            piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
-                Width = 64,
-                Height = 64,
-                Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
-                UseCache = true,
-                TargetPlugin = Info.Metadata,
-            });
+            if (!piece.PiecePrefab.name.StartsWith("MS_IngotStacks_")) {
+                piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
+                    Width = 64,
+                    Height = 64,
+                    Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
+                    UseCache = true,
+                    TargetPlugin = Info.Metadata,
+                });
+            }
 
             foreach (VisualStack visualStack in visualStacks) {
                 visualStack.SetVisualsActive(100f);

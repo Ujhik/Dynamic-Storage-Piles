@@ -22,6 +22,7 @@ namespace DynamicStoragePiles.Compatibility {
             GameObject vfx = FindDestroyVFX(basePrefab, vfxName);
             GameObject stack = PrefabManager.Instance.CreateClonedPrefab(newPrefabName, vfx);
             stack = PreparePiecePrefab(stack, basePrefab, $"${baseAssetName}");
+            stack.name = newPrefabName;
             DynamicStoragePiles.Instance.AddPiece(stack, resource, 3);
         }
 
