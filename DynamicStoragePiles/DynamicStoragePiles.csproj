@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compatibility\AzuAutoStore.cs" />
+    <Compile Include="Compatibility\IngotStacks.cs" />
     <Compile Include="InventoryHelper.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />

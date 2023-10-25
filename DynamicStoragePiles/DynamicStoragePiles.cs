@@ -19,16 +19,19 @@ namespace DynamicStoragePiles {
         public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";
         public const string PluginVersion = "0.3.0";
 
+        public static DynamicStoragePiles Instance { get; private set; }
         public static Harmony harmony;
 
         private static AssetBundle assetBundle;
         private List<CustomPiece> pieces = new List<CustomPiece>();
+        private static Dictionary<string, string> allowedItemsByStack = new Dictionary<string, string>();
 
         public static ConfigEntry<bool> disableVanillaRecipes;
         public static ConfigEntry<bool> azuAutoStoreCompat;
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
 
         private void Awake() {
+            Instance = this;
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
 
             AddPiece("MS_container_wood_stack", "Wood");
@@ -56,6 +59,10 @@ namespace DynamicStoragePiles {
         private void Start() {
             if (Chainloader.PluginInfos.ContainsKey("Azumatt.AzuAutoStore") && azuAutoStoreCompat.Value) {
                 Compatibility.AzuAutoStore.Init();
+            }
+
+            if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
+                Compatibility.IngotStacks.Init();
             }
         }
 
@@ -94,8 +101,16 @@ namespace DynamicStoragePiles {
 
         private void AddPiece(string pieceName, string craftItem) {
             CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, StackConfig(craftItem));
-            pieces.Add(piece);
             PieceManager.Instance.AddPiece(piece);
+            pieces.Add(piece);
+            allowedItemsByStack.Add(pieceName, craftItem);
+        }
+
+        public void AddPiece(GameObject prefab, string craftItem, int amount) {
+            CustomPiece piece = new CustomPiece(prefab, false, StackConfig(craftItem, amount));
+            PieceManager.Instance.AddPiece(piece);
+            pieces.Add(piece);
+            allowedItemsByStack.Add(prefab.name, craftItem);
         }
 
         private void OnPiecesRegistered() {
@@ -115,56 +130,30 @@ namespace DynamicStoragePiles {
                 visualStack.SetVisualsActive(55f);
             }
 
-            piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
-                Width = 64,
-                Height = 64,
-                Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
-                UseCache = true,
-                TargetPlugin = Info.Metadata,
-            });
+            if (!piece.PiecePrefab.name.StartsWith("MS_IngotStacks_")) {
+                piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
+                    Width = 64,
+                    Height = 64,
+                    Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
+                    UseCache = true,
+                    TargetPlugin = Info.Metadata,
+                });
+            }
 
             foreach (VisualStack visualStack in visualStacks) {
                 visualStack.SetVisualsActive(100f);
             }
         }
 
-        private PieceConfig StackConfig(string item) {
+        private PieceConfig StackConfig(string item, int amount = 10) {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;
-            stackConfig.AddRequirement(new RequirementConfig(item, 10, 0, true));
+            stackConfig.AddRequirement(new RequirementConfig(item, amount, 0, true));
             return stackConfig;
         }
 
         public static bool IsStackPiece(string pieceName, out string allowedItem) {
-            switch (pieceName) {
-                case "MS_container_wood_stack":
-                    allowedItem = "Wood";
-                    return true;
-                case "MS_container_finewood_stack":
-                    allowedItem = "FineWood";
-                    return true;
-                case "MS_container_corewood_stack":
-                    allowedItem = "RoundLog";
-                    return true;
-                case "MS_container_yggdrasil_wood_stack":
-                    allowedItem = "YggdrasilWood";
-                    return true;
-                case "MS_container_stone_pile":
-                    allowedItem = "Stone";
-                    return true;
-                case "MS_container_coal_pile":
-                    allowedItem = "Coal";
-                    return true;
-                case "MS_container_blackmarble_pile":
-                    allowedItem = "BlackMarble";
-                    return true;
-                case "MS_container_coin_pile":
-                    allowedItem = "Coins";
-                    return true;
-                default:
-                    allowedItem = string.Empty;
-                    return false;
-            }
+            return allowedItemsByStack.TryGetValue(pieceName, out allowedItem);
         }
     }
 }
