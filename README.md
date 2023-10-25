@@ -27,6 +27,24 @@ Depending on the inventory fill level, more items will be displayed on the stack
 
 ![StackOverview](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/StateShowcase.png)
 
+### Mod Integration
+
+This mod integrates [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) as container stacks for ingots.
+Both mods must be installed for this to work, otherwise no additional stacks will be added to the game.
+
+Each stack costs 3 ingots of the respective material to build:
+- Copper Stack
+- Tin Stack
+- Bronze Stack
+- Iron Stack
+- Silver Stack
+- Black Metal Stack
+- Flametal Stack
+
+![IngotStacksShowcase](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/IngotStacksIntegrationShowcase.png)
+
+Big thanks to Richard for the awesome ingot stacks and possible integration!
+
 
 ## Manual Installation
 
@@ -38,12 +56,13 @@ Extract the content of `DynamicStoragePiles` into the `BepInEx/plugins` folder o
 
 ### Related mods
 
+- [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/), integrates with this mod if both are installed
 - [Balrond Containers](https://valheim.thunderstore.io/package/Balrond/balrond_containers/)
 - [ArborStorage](https://valheim.thunderstore.io/package/coemt/ArborStorage/)
 - [Digitalroots GoldBars](https://valheim.thunderstore.io/package/Digitalroot/Digitalroots_GoldBars/)
 - [OdinsFoodBarrels](https://valheim.thunderstore.io/package/OdinPlus/OdinsFoodBarrels/)
 - [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/)
-- [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/)
+
 
 ### Compatible mods
 
@@ -72,6 +91,9 @@ See [contributing](https://github.com/MSchmoecker/Dynamic-Storage-Piles/blob/mas
 
 
 ## Changelog
+
+0.4.0
+- Added [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) integration when both mods are installed
 
 0.3.0
 - Added the config option to disable vanilla stack pile recipes, making them not buildable with the hammer. Disabled by default
