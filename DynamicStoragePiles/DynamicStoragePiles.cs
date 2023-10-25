@@ -29,6 +29,8 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> disableVanillaRecipes;
         public static ConfigEntry<bool> azuAutoStoreCompat;
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
+        public static ConfigEntry<bool> ingotStacksDisableRecipes;
+        public static ConfigEntry<bool> ingotStacksDisableAdditionalStackRecipes;
 
         private void Awake() {
             Instance = this;
@@ -48,6 +50,12 @@ namespace DynamicStoragePiles {
 
             azuAutoStoreCompat = Config.Bind("2 - Compatibility", "AzuAutoStore Compatibility", true, "Enables compatibility with AzuAutoStore. Requires a restart to take effect");
             azuAutoStoreItemWhitelist = Config.Bind("2 - Compatibility", "AzuAutoStore Item Whitelist", true, "Only allows the respective items to be stored in stack piles");
+
+            ingotStacksDisableRecipes = Config.Bind("2 - Compatibility", "IngotStacks Disable Stack Recipes", false, "Prevents the IngotStacks recipes from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            ingotStacksDisableRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
+            ingotStacksDisableAdditionalStackRecipes = Config.Bind("2 - Compatibility", "IngotStacks Disable Dynamic Stack Recipes", false, "Prevents the additional dynamic container stack recipes from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            ingotStacksDisableAdditionalStackRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
             PrefabManager.OnPrefabsRegistered += () => DisablePieceRecipes(false);
@@ -84,12 +92,22 @@ namespace DynamicStoragePiles {
                 TogglePieceRecipes("treasure_stack", !disableRecipes);
             }
 
+            if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
+                if (forceUpdate || ingotStacksDisableRecipes.Value) {
+                    Compatibility.IngotStacks.DisablePieceRecipes(ingotStacksDisableRecipes.Value);
+                }
+
+                if (forceUpdate || ingotStacksDisableAdditionalStackRecipes.Value) {
+                    Compatibility.IngotStacks.DisableAdditionalPieceRecipes(ingotStacksDisableAdditionalStackRecipes.Value);
+                }
+            }
+
             if (Player.m_localPlayer) {
                 Player.m_localPlayer.UpdateAvailablePiecesList();
             }
         }
 
-        private static void TogglePieceRecipes(string prefabName, bool enabled) {
+        public static void TogglePieceRecipes(string prefabName, bool enabled) {
             GameObject prefab = ZNetScene.instance.GetPrefab(prefabName);
 
             if (prefab && prefab.TryGetComponent(out Piece piece)) {

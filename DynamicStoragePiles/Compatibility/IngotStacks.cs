@@ -71,5 +71,25 @@ namespace DynamicStoragePiles.Compatibility {
 
             return null;
         }
+
+        public static void DisablePieceRecipes(bool disable) {
+            DynamicStoragePiles.TogglePieceRecipes("ingot_copper_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_tin_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_bronze_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_iron_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_silver_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_blackmetal_stack", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("ingot_flametal_stack", !disable);
+        }
+
+        public static void DisableAdditionalPieceRecipes(bool disable) {
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Copper", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Tin", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Bronze", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Iron", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Silver", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Blackmetal", !disable);
+            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Flametal", !disable);
+        }
     }
 }
