@@ -13,7 +13,7 @@ using UnityEngine;
 namespace DynamicStoragePiles {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
-    // [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
+    [NetworkCompatibility(CompatibilityLevel.ClientMustHaveMod, VersionStrictness.Minor)]
     internal class DynamicStoragePiles : BaseUnityPlugin {
         public const string PluginName = "DynamicStoragePiles";
         public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";

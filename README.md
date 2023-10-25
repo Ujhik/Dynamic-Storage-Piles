@@ -51,6 +51,8 @@ Big thanks to Richard for the awesome ingot stacks and possible integration!
 This mod requires [BepInEx](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) and [Jötunn](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/).\
 Extract the content of `DynamicStoragePiles` into the `BepInEx/plugins` folder or any subfolder.
 
+If the mod is installed on the server, it will be enforced for all players.
+
 
 ## Other mods
 
@@ -94,6 +96,7 @@ See [contributing](https://github.com/MSchmoecker/Dynamic-Storage-Piles/blob/mas
 
 0.4.0
 - Added [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) integration when both mods are installed
+- Added mod enforcement to all players if the mod is installed on the server
 
 0.3.0
 - Added the config option to disable vanilla stack pile recipes, making them not buildable with the hammer. Disabled by default
