@@ -79,17 +79,8 @@ namespace DynamicStoragePiles {
                 return;
             }
 
-            bool disableRecipes = disableVanillaRecipes.Value;
-
-            if (forceUpdate || disableRecipes) {
-                TogglePieceRecipes("wood_stack", !disableRecipes);
-                TogglePieceRecipes("wood_fine_stack", !disableRecipes);
-                TogglePieceRecipes("wood_core_stack", !disableRecipes);
-                TogglePieceRecipes("wood_yggdrasil_stack", !disableRecipes);
-                TogglePieceRecipes("stone_pile", !disableRecipes);
-                TogglePieceRecipes("coal_pile", !disableRecipes);
-                TogglePieceRecipes("blackmarble_pile", !disableRecipes);
-                TogglePieceRecipes("treasure_stack", !disableRecipes);
+            if (forceUpdate || disableVanillaRecipes.Value) {
+                DisableVanillaRecipes(disableVanillaRecipes.Value);
             }
 
             if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
@@ -105,6 +96,17 @@ namespace DynamicStoragePiles {
             if (Player.m_localPlayer) {
                 Player.m_localPlayer.UpdateAvailablePiecesList();
             }
+        }
+
+        private static void DisableVanillaRecipes(bool disable) {
+            TogglePieceRecipes("wood_stack", !disable);
+            TogglePieceRecipes("wood_fine_stack", !disable);
+            TogglePieceRecipes("wood_core_stack", !disable);
+            TogglePieceRecipes("wood_yggdrasil_stack", !disable);
+            TogglePieceRecipes("stone_pile", !disable);
+            TogglePieceRecipes("coal_pile", !disable);
+            TogglePieceRecipes("blackmarble_pile", !disable);
+            TogglePieceRecipes("treasure_stack", !disable);
         }
 
         public static void TogglePieceRecipes(string prefabName, bool enabled) {
