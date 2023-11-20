@@ -34,6 +34,9 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> restrictDynamicPiles;
         public static bool ShouldRestrictItems => restrictDynamicPiles.Value;
 
+        private static readonly Dictionary<string, string> allowedItemsByContainer = new Dictionary<string, string>();
+        
+
         private void Awake() {
             Instance = this;
             assetBundle = AssetUtils.LoadAssetBundleFromResources("containerstacks");
@@ -76,6 +79,10 @@ namespace DynamicStoragePiles {
             if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
                 Compatibility.IngotStacks.Init();
             }
+
+            // All containers have been created and their restrictions set in allowedItemsByContainer
+            // so RestrictContainers can be initialized to enforce those restrictions.
+            RestrictContainers.SetContainerRestrictions(allowedItemsByContainer);
         }
 
         private static void DisablePieceRecipes(bool forceUpdate) {
@@ -128,6 +135,7 @@ namespace DynamicStoragePiles {
             PieceManager.Instance.AddPiece(piece);
             pieces.Add(piece);
             allowedItemsByStack.Add(pieceName, craftItem);
+            allowedItemsByContainer.Add(piece.PiecePrefab.GetComponent<Container>().m_name, craftItem);
         }
 
         public void AddPiece(GameObject prefab, string craftItem, int amount) {
@@ -135,6 +143,7 @@ namespace DynamicStoragePiles {
             PieceManager.Instance.AddPiece(piece);
             pieces.Add(piece);
             allowedItemsByStack.Add(prefab.name, craftItem);
+            allowedItemsByContainer.Add(prefab.GetComponent<Container>().m_name, craftItem);
         }
 
         private void OnPiecesRegistered() {
