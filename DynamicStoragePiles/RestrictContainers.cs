@@ -32,6 +32,7 @@ namespace DynamicStoragePiles {
         /// <returns></returns>
         private static bool CanAddItem(Inventory inventory, ItemDrop.ItemData item) {
             if (inventory == null || item == null) { return false; }
+
             Jotunn.Logger.LogDebug("CanAddItem");
             Jotunn.Logger.LogDebug($"Add to: {inventory.m_name}");
             Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
@@ -43,8 +44,7 @@ namespace DynamicStoragePiles {
                 return true;
             }
 
-            if (IsRestrictedContainer(inventory.m_name, out string allowedItem))
-            {
+            if (IsRestrictedContainer(inventory.m_name, out string allowedItem)) {
                 var result = item.PrefabName() == allowedItem;
                 if (!result) {
                     // Message player that item cannot be placed in container.
@@ -125,9 +125,11 @@ namespace DynamicStoragePiles {
         [HarmonyPriority(Priority.First)]
         private static bool MoveItemToThisPrefix_1(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
             if (__instance == null || fromInventory == null || item == null) { return false; }
+
             Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
             Jotunn.Logger.LogDebug($"Add to: {__instance.m_name}");
             Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
+            
             return CanAddItem(__instance, item);
         }
 
@@ -247,8 +249,7 @@ namespace DynamicStoragePiles {
         /// <returns></returns>
         private static bool ShouldRemoveItem(Inventory __instance, ItemDrop.ItemData item) {
             // early return and block removal since it's null
-            if (__instance == null || item == null)
-            {
+            if (__instance == null || item == null) {
                 return false;
             }
 
@@ -278,7 +279,9 @@ namespace DynamicStoragePiles {
         [HarmonyPatch(nameof(Inventory.Load))]
         private static void LoadPrefix(Inventory __instance) {
             if (__instance == null) { return; }
+
             Jotunn.Logger.LogDebug($"Load prefix: {__instance.m_name}");
+
             _loadingContainer = __instance.m_name;
         }
 
