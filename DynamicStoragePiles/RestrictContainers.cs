@@ -105,7 +105,7 @@ namespace DynamicStoragePiles {
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool AddItemPrefix_2(Inventory __instance, ItemDrop.ItemData item, ref bool __result) {
+        private static bool AddItemPrefix_2(Inventory __instance, ItemDrop.ItemData item, int _, ref bool __result) {
             if (!CanAddItem(__instance, item)) {
                 __result = false;
                 return __result;
@@ -148,7 +148,7 @@ namespace DynamicStoragePiles {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool MoveItemToThisPrefix_2(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
+        private static bool MoveItemToThisPrefix_2(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item, int _) {
             if (__instance == null || fromInventory == null || item == null) { return false; }
 
             Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
