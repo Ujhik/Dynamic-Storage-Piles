@@ -31,6 +31,8 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
         public static ConfigEntry<bool> ingotStacksDisableRecipes;
         public static ConfigEntry<bool> ingotStacksDisableAdditionalStackRecipes;
+        public static ConfigEntry<bool> restrictDynamicPiles;
+        public static bool ShouldRestrictItems => restrictDynamicPiles.Value;
 
         private void Awake() {
             Instance = this;
@@ -47,6 +49,8 @@ namespace DynamicStoragePiles {
 
             disableVanillaRecipes = Config.Bind("1 - General", "Disable Vanilla Stack Recipes", false, "Prevents vanilla stack pieces from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
             disableVanillaRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
+            restrictDynamicPiles = Config.Bind("1 - General", "Restrict Container Item Type", true, "Prevents items other than the one the dynamic storage container represents from being placed in it");
 
             azuAutoStoreCompat = Config.Bind("2 - Compatibility", "AzuAutoStore Compatibility", true, "Enables compatibility with AzuAutoStore. Requires a restart to take effect");
             azuAutoStoreItemWhitelist = Config.Bind("2 - Compatibility", "AzuAutoStore Item Whitelist", true, "Only allows the respective items to be stored in stack piles");
