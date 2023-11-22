@@ -81,28 +81,9 @@ namespace DynamicStoragePiles {
         /// <returns></returns>
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData) })]
-        [HarmonyPriority(Priority.First)]
-        private static bool AddItemPrefix_1(Inventory __instance, ItemDrop.ItemData item, ref bool __result) {
-            if (!CanAddItem(__instance, item)) {
-                __result = false;
-                return __result;
-            }
-            return true;
-        }
-
-        /// <summary>
-        ///    Patch to trigger CanAddItem check when attempting to add item to inventory.
-        ///    If CanAddItem is false then the AddItem method in Valheim will be skipped
-        ///    and return false to indicate the item was not added.
-        /// </summary>
-        /// <param name="__instance"></param>
-        /// <param name="item"></param>
-        /// <param name="__result"></param>
-        /// <returns></returns>
-        [HarmonyPrefix]
         [HarmonyPatch(nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool AddItemPrefix_2(Inventory __instance, ItemDrop.ItemData item, int amount, ref bool __result) {
+        private static bool AddItemPrefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result) {
             if (!CanAddItem(__instance, item)) {
                 __result = false;
                 return __result;
