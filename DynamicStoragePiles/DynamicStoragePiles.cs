@@ -79,10 +79,6 @@ namespace DynamicStoragePiles {
             if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
                 Compatibility.IngotStacks.Init();
             }
-
-            // All containers have been created and their restrictions set in allowedItemsByContainer
-            // so RestrictContainers can be initialized to enforce those restrictions.
-            RestrictContainers.SetContainerRestrictions(allowedItemsByContainer);
         }
 
         private static void DisablePieceRecipes(bool forceUpdate) {

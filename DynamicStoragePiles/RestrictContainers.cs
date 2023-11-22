@@ -12,15 +12,7 @@ namespace DynamicStoragePiles {
         private static string _loadingContainer;
         private static string _targetContainer;
         private static string _allowedItem;
-        private static Dictionary<string, string> _allowedItemsByContainer = new Dictionary<string, string>();
 
-        /// <summary>
-        ///     Set which containers to restrict and which item is allowed to be placed in each one.
-        /// </summary>
-        /// <param name="allowedItemByContainer"></param>
-        public static void SetContainerRestrictions(Dictionary<string, string> allowedItemByContainer) {
-            _allowedItemsByContainer = allowedItemByContainer;
-        }
 
         /// <summary>
         ///     Checks if adding item to inventory should be blocked based on
@@ -67,7 +59,7 @@ namespace DynamicStoragePiles {
                 allowedItem = null;
                 return false;
             }
-            return _allowedItemsByContainer.TryGetValue(containerName, out allowedItem);
+            return DynamicStoragePiles.allowedItemsByContainer.TryGetValue(containerName, out allowedItem);
         }
 
         /// <summary>
