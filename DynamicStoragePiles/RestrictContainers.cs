@@ -162,23 +162,9 @@ namespace DynamicStoragePiles {
         /// <returns></returns>
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveItem), new[] { typeof(ItemDrop.ItemData) })]
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveItem), new[] { typeof(ItemDrop.ItemData), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool RemoveItemPrefix_1(Inventory __instance, ItemDrop.ItemData item) {
-            return ShouldRemoveItem(__instance, item);
-        }
-
-        /// <summary>
-        ///     Patch to check trigger ShouldRemoveItem check and prevent RemoveItem from running if
-        ///     the item was moved during a call to MoveAll and failed to be added to the target
-        ///     container because it was restricted and not the allowed item type.
-        /// </summary>
-        /// <param name="__instance"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(Inventory.RemoveItem), new[] { typeof(ItemDrop.ItemData), typeof(int) })]
-        [HarmonyPriority(Priority.First)]
-        private static bool RemoveItemPrefix_2(Inventory __instance, ItemDrop.ItemData item) {
+        private static bool RemoveItemPrefix(Inventory __instance, ItemDrop.ItemData item) {
             return ShouldRemoveItem(__instance, item);
         }
 
