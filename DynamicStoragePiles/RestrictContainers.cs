@@ -40,7 +40,7 @@ namespace DynamicStoragePiles {
             // Return early if this check is being called while loading a container.
             // Don't want to delete "non-allowed" items that were put in the container
             // while the restrictions were disabled.
-            if (!string.IsNullOrEmpty(_loadingContainer) && inventory.m_name == _loadingContainer) {
+            if (inventory.m_name == _loadingContainer) {
                 return true;
             }
 
