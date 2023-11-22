@@ -121,33 +121,10 @@ namespace DynamicStoragePiles {
         /// <param name="item"></param>
         /// <returns></returns>
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData) })]
-        [HarmonyPriority(Priority.First)]
-        private static bool MoveItemToThisPrefix_1(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
-            if (__instance == null || fromInventory == null || item == null) { return false; }
-
-            Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
-            Jotunn.Logger.LogDebug($"Add to: {__instance.m_name}");
-            Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
-            
-            return CanAddItem(__instance, item);
-        }
-
-
-        /// <summary>
-        ///     Patch to prevent MoveItemToThis from running if CanAddItem check is false. MoveItemToThis
-        ///     will call RemoveItem from the source inventory even in cases where AddItem returns false,
-        ///     so the entire method needs to be prevented from running to avoid items being lost when players
-        ///     try to place items in containers that do not allow that type of item.
-        /// </summary>
-        /// <param name="__instance"></param>
-        /// <param name="fromInventory"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData) })]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool MoveItemToThisPrefix_2(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item, int amount) {
+        private static bool MoveItemToThisPrefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
             if (__instance == null || fromInventory == null || item == null) { return false; }
 
             Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
