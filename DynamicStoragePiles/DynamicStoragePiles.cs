@@ -34,7 +34,7 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> restrictDynamicPiles;
         public static bool ShouldRestrictItems => restrictDynamicPiles.Value;
 
-        private static readonly Dictionary<string, string> allowedItemsByContainer = new Dictionary<string, string>();
+        public static readonly Dictionary<string, string> allowedItemsByContainer = new Dictionary<string, string>();
         
 
         private void Awake() {
