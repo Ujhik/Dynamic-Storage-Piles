@@ -8,7 +8,7 @@ namespace DynamicStoragePiles
     ///     Class to patch Valheim inventory methods so that the specified
     ///     containers can only contain items of a single type.
     /// </summary>
-    [HarmonyPatch(typeof(Inventory))]
+    [HarmonyPatch]
     internal static class RestrictContainers
     {
         private static string _loadingContainer;
