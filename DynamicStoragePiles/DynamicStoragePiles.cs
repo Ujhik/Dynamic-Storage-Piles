@@ -31,6 +31,8 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
         public static ConfigEntry<bool> ingotStacksDisableRecipes;
         public static ConfigEntry<bool> ingotStacksDisableAdditionalStackRecipes;
+        public static ConfigEntry<bool> disableStackedBarsRecipes;
+        public static ConfigEntry<bool> disableStackedBarsAdditionalStackRecipes;
 
         private void Awake() {
             Instance = this;
@@ -57,6 +59,12 @@ namespace DynamicStoragePiles {
             ingotStacksDisableAdditionalStackRecipes = Config.Bind("2 - Compatibility", "IngotStacks Disable Dynamic Stack Recipes", false, "Prevents the additional dynamic container stack recipes from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
             ingotStacksDisableAdditionalStackRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
 
+            disableStackedBarsRecipes = Config.Bind("2 - Compatibility", "StackedBars Disable Stack Recipes", false, "Prevents the StackedBars recipes from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            disableStackedBarsRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
+            disableStackedBarsAdditionalStackRecipes = Config.Bind("2 - Compatibility", "StackedBars Disable Dynamic Stack Recipes", false, "Prevents the additional dynamic container stack recipes from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
+            disableStackedBarsAdditionalStackRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
             PrefabManager.OnPrefabsRegistered += () => DisablePieceRecipes(false);
 
@@ -71,6 +79,10 @@ namespace DynamicStoragePiles {
 
             if (Chainloader.PluginInfos.ContainsKey("Richard.IngotStacks")) {
                 Compatibility.IngotStacks.Init();
+            }
+
+            if (Chainloader.PluginInfos.ContainsKey("Azumatt.StackedBars")) {
+                Compatibility.StackedBars.Init();
             }
         }
 
@@ -90,6 +102,16 @@ namespace DynamicStoragePiles {
 
                 if (forceUpdate || ingotStacksDisableAdditionalStackRecipes.Value) {
                     Compatibility.IngotStacks.DisableAdditionalPieceRecipes(ingotStacksDisableAdditionalStackRecipes.Value);
+                }
+            }
+
+            if (Chainloader.PluginInfos.ContainsKey("Azumatt.StackedBars")) {
+                if (forceUpdate || disableStackedBarsRecipes.Value) {
+                    Compatibility.StackedBars.DisablePieceRecipes(disableStackedBarsRecipes.Value);
+                }
+
+                if (forceUpdate || disableStackedBarsAdditionalStackRecipes.Value) {
+                    Compatibility.StackedBars.DisableAdditionalPieceRecipes(disableStackedBarsAdditionalStackRecipes.Value);
                 }
             }
 
@@ -150,7 +172,7 @@ namespace DynamicStoragePiles {
                 visualStack.SetVisualsActive(55f);
             }
 
-            if (!piece.PiecePrefab.name.StartsWith("MS_IngotStacks_")) {
+            if (!piece.PiecePrefab.name.StartsWith("MS_IngotStacks_") && !piece.PiecePrefab.name.StartsWith("MS_StackedBars_")) {
                 piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
                     Width = 64,
                     Height = 64,
@@ -168,6 +190,7 @@ namespace DynamicStoragePiles {
         private PieceConfig StackConfig(string item, int amount = 10) {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;
+            stackConfig.Category = PieceCategories.Misc;
             stackConfig.AddRequirement(new RequirementConfig(item, amount, 0, true));
             return stackConfig;
         }
