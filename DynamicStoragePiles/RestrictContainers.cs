@@ -14,6 +14,33 @@ namespace DynamicStoragePiles {
 
 
         /// <summary>
+        ///     Checks if the item being dropped into the inventory is allowed to be placed in it and checks
+        ///     if the item that would be swapped into the fromInventory is allowed to be placed in it.
+        /// </summary>
+        /// <param name="__instance"></param>
+        /// <param name="fromInventory"></param>
+        /// <param name="item"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(InventoryGrid), nameof(InventoryGrid.DropItem))]
+        private static bool DropItemPrefix(InventoryGrid __instance, Inventory fromInventory, ItemDrop.ItemData item, Vector2i pos) {
+
+            // Return early if item can't be dropped into inventory
+            if (!CanAddItem(__instance.m_inventory, item)) {
+                return false;
+            }
+
+            // Check if item being swapped can be placed in fromInventory
+            ItemDrop.ItemData itemAt = __instance.m_inventory.GetItemAt(pos.x, pos.y);
+            if (itemAt != null) {
+                return CanAddItem(fromInventory, itemAt);
+            }
+
+            return true;
+        }
+
+        /// <summary>
         ///     Checks if adding item to inventory should be blocked based on
         ///     if the container and item names are restricted. Also notifies
         ///     the player of why adding the item is not allowed.
