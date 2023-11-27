@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using HarmonyLib;
 
-namespace DynamicStoragePiles
-{
+namespace DynamicStoragePiles {
 
     /// <summary>
     ///     Class to patch Valheim inventory methods so that the specified
     ///     containers can only contain items of a single type.
     /// </summary>
     [HarmonyPatch]
-    internal static class RestrictContainers
-    {
+    internal static class RestrictContainers {
         private static string _loadingContainer;
         private static string _targetContainer;
         private static string _allowedItem;
@@ -24,9 +22,10 @@ namespace DynamicStoragePiles
         /// <param name="inventory"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static bool CanAddItem(Inventory inventory, ItemDrop.ItemData item)
-        {
-            if (inventory == null || item == null) { return false; }
+        private static bool CanAddItem(Inventory inventory, ItemDrop.ItemData item) {
+            if (inventory == null || item == null) {
+                return false;
+            }
 
             Jotunn.Logger.LogDebug("CanAddItem");
             Jotunn.Logger.LogDebug($"Add to: {inventory.m_name}");
@@ -35,22 +34,20 @@ namespace DynamicStoragePiles
             // Return early if this check is being called while loading a container.
             // Don't want to delete "non-allowed" items that were put in the container
             // while the restrictions were disabled.
-            if (inventory.m_name == _loadingContainer)
-            {
+            if (inventory.m_name == _loadingContainer) {
                 return true;
             }
 
-            if (IsRestrictedContainer(inventory.m_name, out string allowedItem))
-            {
+            if (IsRestrictedContainer(inventory.m_name, out string allowedItem)) {
                 var result = item.PrefabName() == allowedItem;
-                if (!result)
-                {
+                if (!result) {
                     // Message player that item cannot be placed in container.
                     var msg = $"{item.m_shared.m_name} cannnot be placed in {inventory.m_name}";
                     Player.m_localPlayer?.Message(MessageHud.MessageType.Center, msg);
                 }
                 return result;
             }
+
             return true;
         }
 
@@ -60,10 +57,8 @@ namespace DynamicStoragePiles
         /// <param name="containerName"></param>
         /// <param name="allowedItem"></param>
         /// <returns></returns>
-        public static bool IsRestrictedContainer(string containerName, out string allowedItem)
-        {
-            if (!DynamicStoragePiles.ShouldRestrictItems)
-            {
+        public static bool IsRestrictedContainer(string containerName, out string allowedItem) {
+            if (!DynamicStoragePiles.ShouldRestrictItems) {
                 allowedItem = null;
                 return false;
             }
@@ -83,10 +78,8 @@ namespace DynamicStoragePiles
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData) })]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool AddItemPrefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result)
-        {
-            if (!CanAddItem(__instance, item))
-            {
+        private static bool AddItemPrefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result) {
+            if (!CanAddItem(__instance, item)) {
                 __result = false;
                 return __result;
             }
@@ -107,8 +100,7 @@ namespace DynamicStoragePiles
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData) })]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool MoveItemToThisPrefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item)
-        {
+        private static bool MoveItemToThisPrefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
             if (__instance == null || fromInventory == null || item == null) { return false; }
 
             Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
@@ -132,15 +124,15 @@ namespace DynamicStoragePiles
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveAll), new[] { typeof(Inventory) })]
         [HarmonyPriority(Priority.First)]
-        private static void MoveAllPrefix(Inventory __instance, Inventory fromInventory)
-        {
-            if (__instance == null || fromInventory == null) { return; }
+        private static void MoveAllPrefix(Inventory __instance, Inventory fromInventory) {
+            if (__instance == null || fromInventory == null) {
+                return;
+            }
 
             Jotunn.Logger.LogDebug("MoveAllPrefix");
             Jotunn.Logger.LogDebug($"Move to: {__instance.m_name}");
 
-            if (IsRestrictedContainer(__instance.m_name, out string allowedItem))
-            {
+            if (IsRestrictedContainer(__instance.m_name, out string allowedItem)) {
                 _targetContainer = __instance.m_name;
                 _allowedItem = allowedItem;
             }
@@ -152,8 +144,7 @@ namespace DynamicStoragePiles
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveAll), new[] { typeof(Inventory) })]
         [HarmonyPriority(Priority.First)]
-        private static void MoveAllPostfix()
-        {
+        private static void MoveAllPostfix() {
             _targetContainer = null;
             _allowedItem = null;
         }
@@ -170,8 +161,7 @@ namespace DynamicStoragePiles
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveItem), new[] { typeof(ItemDrop.ItemData) })]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveItem), new[] { typeof(ItemDrop.ItemData), typeof(int) })]
         [HarmonyPriority(Priority.First)]
-        private static bool RemoveItemPrefix(Inventory __instance, ItemDrop.ItemData item)
-        {
+        private static bool RemoveItemPrefix(Inventory __instance, ItemDrop.ItemData item) {
             return ShouldRemoveItem(__instance, item);
         }
 
@@ -184,10 +174,9 @@ namespace DynamicStoragePiles
         /// <param name="item"></param>
         /// <returns></returns>
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(Inventory.RemoveOneItem), new[] { typeof(ItemDrop.ItemData) })]
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveOneItem), new[] { typeof(ItemDrop.ItemData) })]
         [HarmonyPriority(Priority.First)]
-        private static bool RemoveOneItemPrefix(Inventory __instance, ItemDrop.ItemData item)
-        {
+        private static bool RemoveOneItemPrefix(Inventory __instance, ItemDrop.ItemData item) {
             return ShouldRemoveItem(__instance, item);
         }
 
@@ -199,11 +188,9 @@ namespace DynamicStoragePiles
         /// <param name="__instance"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static bool ShouldRemoveItem(Inventory __instance, ItemDrop.ItemData item)
-        {
+        private static bool ShouldRemoveItem(Inventory __instance, ItemDrop.ItemData item) {
             // early return and block removal since it's null
-            if (__instance == null || item == null)
-            {
+            if (__instance == null || item == null) {
                 return false;
             }
 
@@ -215,8 +202,7 @@ namespace DynamicStoragePiles
             Jotunn.Logger.LogDebug($"Remove from: {__instance.m_name}");
             Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
 
-            if (wasAddedToDynamicPile && haveAllowableItem)
-            {
+            if (wasAddedToDynamicPile && haveAllowableItem) {
                 return item.PrefabName() != _allowedItem;
             }
             return true;
@@ -231,9 +217,8 @@ namespace DynamicStoragePiles
         /// </summary>
         /// <param name="__instance"></param>
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(Inventory.Load))]
-        private static void LoadPrefix(Inventory __instance)
-        {
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.Load))]
+        private static void LoadPrefix(Inventory __instance) {
             if (__instance == null) { return; }
 
             Jotunn.Logger.LogDebug($"Load prefix: {__instance.m_name}");
@@ -246,9 +231,8 @@ namespace DynamicStoragePiles
         /// </summary>
         /// <param name="__instance"></param>
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Inventory.Load))]
-        private static void LoadPostfix()
-        {
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.Load))]
+        private static void LoadPostfix() {
             _loadingContainer = null;
         }
     }
