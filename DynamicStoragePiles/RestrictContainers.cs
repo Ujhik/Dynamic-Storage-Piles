@@ -88,6 +88,7 @@ namespace DynamicStoragePiles {
                 allowedItem = null;
                 return false;
             }
+
             return DynamicStoragePiles.allowedItemsByContainer.TryGetValue(containerName, out allowedItem);
         }
 
@@ -127,7 +128,9 @@ namespace DynamicStoragePiles {
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), new[] { typeof(Inventory), typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int) })]
         [HarmonyPriority(Priority.First)]
         private static bool MoveItemToThisPrefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item) {
-            if (__instance == null || fromInventory == null || item == null) { return false; }
+            if (__instance == null || fromInventory == null || item == null) {
+                return false;
+            }
 
             Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
             Jotunn.Logger.LogDebug($"Add to: {__instance.m_name}");
@@ -231,6 +234,7 @@ namespace DynamicStoragePiles {
             if (wasAddedToDynamicPile && haveAllowableItem) {
                 return item.PrefabName() != _allowedItem;
             }
+
             return true;
         }
 
@@ -245,7 +249,9 @@ namespace DynamicStoragePiles {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.Load))]
         private static void LoadPrefix(Inventory __instance) {
-            if (__instance == null) { return; }
+            if (__instance == null) {
+                return;
+            }
 
             Jotunn.Logger.LogDebug($"Load prefix: {__instance.m_name}");
 
