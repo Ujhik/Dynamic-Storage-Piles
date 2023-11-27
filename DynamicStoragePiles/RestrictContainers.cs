@@ -53,10 +53,6 @@ namespace DynamicStoragePiles {
                 return false;
             }
 
-            Jotunn.Logger.LogDebug("CanAddItem");
-            Jotunn.Logger.LogDebug($"Add to: {inventory.m_name}");
-            Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
-
             // Return early if this check is being called while loading a container.
             // Don't want to delete "non-allowed" items that were put in the container
             // while the restrictions were disabled.
@@ -110,6 +106,7 @@ namespace DynamicStoragePiles {
                 __result = false;
                 return __result;
             }
+
             return true;
         }
 
@@ -132,10 +129,6 @@ namespace DynamicStoragePiles {
                 return false;
             }
 
-            Jotunn.Logger.LogDebug("MoveItemToThisPrefix");
-            Jotunn.Logger.LogDebug($"Add to: {__instance.m_name}");
-            Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
-
             return CanAddItem(__instance, item);
         }
 
@@ -157,9 +150,6 @@ namespace DynamicStoragePiles {
             if (__instance == null || fromInventory == null) {
                 return;
             }
-
-            Jotunn.Logger.LogDebug("MoveAllPrefix");
-            Jotunn.Logger.LogDebug($"Move to: {__instance.m_name}");
 
             if (IsRestrictedContainer(__instance.m_name, out string allowedItem)) {
                 _targetContainer = __instance.m_name;
@@ -227,10 +217,6 @@ namespace DynamicStoragePiles {
             bool wasAddedToDynamicPile = !string.IsNullOrEmpty(_targetContainer);
             bool haveAllowableItem = !string.IsNullOrEmpty(_allowedItem);
 
-            Jotunn.Logger.LogDebug("RemoveItemPrefix");
-            Jotunn.Logger.LogDebug($"Remove from: {__instance.m_name}");
-            Jotunn.Logger.LogDebug($"Item: {item.PrefabName()}");
-
             if (wasAddedToDynamicPile && haveAllowableItem) {
                 return item.PrefabName() != _allowedItem;
             }
@@ -252,8 +238,6 @@ namespace DynamicStoragePiles {
             if (__instance == null) {
                 return;
             }
-
-            Jotunn.Logger.LogDebug($"Load prefix: {__instance.m_name}");
 
             _loadingContainer = __instance.m_name;
         }
