@@ -1,10 +1,13 @@
-﻿using Jotunn;
+﻿using System.Collections.Generic;
 using Jotunn.Managers;
 using UnityEngine;
 
 namespace DynamicStoragePiles.Compatibility {
     public static class IngotStacks {
         private static AssetBundle assetBundle;
+
+        public static List<string> ingotStacks = new List<string>();
+        public static List<string> dynamicIngotStacks = new List<string>();
 
         public static void Init() {
             assetBundle = PieceHelper.GetAssetBundle("stackedingots");
@@ -18,32 +21,15 @@ namespace DynamicStoragePiles.Compatibility {
         }
 
         public static void ConvertToPiece(string baseAssetName, string vfxName, string newPrefabName, string resource) {
+            ingotStacks.Add(baseAssetName);
+            dynamicIngotStacks.Add(newPrefabName);
+
             GameObject basePrefab = assetBundle.LoadAsset<GameObject>(baseAssetName);
             GameObject vfx = PieceHelper.FindDestroyVFX(basePrefab, vfxName);
             GameObject stack = PrefabManager.Instance.CreateClonedPrefab(newPrefabName, vfx);
             stack = PieceHelper.PreparePiecePrefab(stack, basePrefab, $"${baseAssetName}");
             stack.name = newPrefabName;
-            DynamicStoragePiles.Instance.AddPiece(stack, resource, 3);
-        }
-
-        public static void DisablePieceRecipes(bool disable) {
-            DynamicStoragePiles.TogglePieceRecipes("ingot_copper_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_tin_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_bronze_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_iron_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_silver_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_blackmetal_stack", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("ingot_flametal_stack", !disable);
-        }
-
-        public static void DisableAdditionalPieceRecipes(bool disable) {
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Copper", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Tin", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Bronze", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Iron", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Silver", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Blackmetal", !disable);
-            DynamicStoragePiles.TogglePieceRecipes("MS_IngotStacks_Flametal", !disable);
+            DynamicStoragePiles.Instance.AddCompatPiece(stack, resource, 3);
         }
     }
 }

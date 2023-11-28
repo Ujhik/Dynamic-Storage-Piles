@@ -21,7 +21,7 @@ namespace DynamicStoragePiles.Compatibility {
                     return;
                 }
 
-                if (!DynamicStoragePiles.azuAutoStoreItemWhitelist.Value) {
+                if (!ConfigSettings.azuAutoStoreItemWhitelist.Value) {
                     return;
                 }
 
@@ -38,7 +38,7 @@ namespace DynamicStoragePiles.Compatibility {
                     return;
                 }
 
-                if (!DynamicStoragePiles.azuAutoStoreItemWhitelist.Value) {
+                if (!ConfigSettings.azuAutoStoreItemWhitelist.Value) {
                     return;
                 }
 

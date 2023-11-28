@@ -80,7 +80,7 @@ namespace DynamicStoragePiles {
         /// <param name="allowedItem"></param>
         /// <returns></returns>
         public static bool IsRestrictedContainer(string containerName, out string allowedItem) {
-            if (!DynamicStoragePiles.ShouldRestrictItems) {
+            if (!ConfigSettings.restrictDynamicPiles.Value) {
                 allowedItem = null;
                 return false;
             }

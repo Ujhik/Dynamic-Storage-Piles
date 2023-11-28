@@ -84,6 +84,7 @@
     <Compile Include="Compatibility\AzuAutoStore.cs" />
     <Compile Include="Compatibility\IngotStacks.cs" />
     <Compile Include="Compatibility\StackedBars.cs" />
+    <Compile Include="ConfigSettings.cs" />
     <Compile Include="InventoryHelper.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="PieceHelper.cs" />
