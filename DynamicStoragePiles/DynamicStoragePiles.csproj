@@ -90,6 +90,7 @@
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="DynamicStoragePiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestrictContainers.cs" />
     <Compile Include="VisualStack.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +115,7 @@
   <Target Name="Deploy">
     <Message Text="Deploing into: $(FULL_DEPLOY_FOLDER)" Importance="high" />
     <MakeDir Directories="$(FULL_DEPLOY_FOLDER)" />
-
+	  
     <!--Create Thunderstore Zip-->
     <RemoveDir Directories="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
@@ -122,12 +123,12 @@
     <Copy SourceFiles="$(SolutionDir)README.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/manifest.json" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <ZipDirectory SourceDirectory="$(TMP_DEPLOY_FOLDER)" DestinationFile="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" Overwrite="true" />
-
+	  
     <!--Create Nexus Zip-->
     <RemoveDir Directories="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(TMP_DEPLOY_FOLDER)/plugins/$(TargetName)" />
     <ZipDirectory SourceDirectory="$(TMP_DEPLOY_FOLDER)" DestinationFile="$(FULL_DEPLOY_FOLDER)/$(TargetName)-Nexus.zip" Overwrite="true" />
-
+	  
     <!--Unpack to deploy folder-->
     <Unzip Condition="Exists('$(DEPLOY_FOLDER)')" SourceFiles="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" DestinationFolder="$(FULL_DEPLOY_FOLDER)" />
     <Unzip Condition="Exists('$(DEPLOY_FOLDER_XBOX)')" SourceFiles="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" DestinationFolder="$(FULL_DEPLOY_FOLDER_XBOX)" />

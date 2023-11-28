@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Bootstrap;
@@ -31,6 +31,11 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
         public static ConfigEntry<bool> ingotStacksDisableRecipes;
         public static ConfigEntry<bool> ingotStacksDisableAdditionalStackRecipes;
+        public static ConfigEntry<bool> restrictDynamicPiles;
+        public static bool ShouldRestrictItems => restrictDynamicPiles.Value;
+
+        public static readonly Dictionary<string, string> allowedItemsByContainer = new Dictionary<string, string>();
+
         public static ConfigEntry<bool> disableStackedBarsRecipes;
         public static ConfigEntry<bool> disableStackedBarsAdditionalStackRecipes;
 
@@ -49,6 +54,8 @@ namespace DynamicStoragePiles {
 
             disableVanillaRecipes = Config.Bind("1 - General", "Disable Vanilla Stack Recipes", false, "Prevents vanilla stack pieces from being placeable with the hammer. It uses the vanilla system to disable pieces, cheats or world modifiers can overwrite this setting. Existing pieces in the world are not affected");
             disableVanillaRecipes.SettingChanged += (sender, args) => DisablePieceRecipes(true);
+
+            restrictDynamicPiles = Config.Bind("1 - General", "Restrict Container Item Type", true, "Prevents items other than the one the dynamic storage container represents from being placed in it");
 
             azuAutoStoreCompat = Config.Bind("2 - Compatibility", "AzuAutoStore Compatibility", true, "Enables compatibility with AzuAutoStore. Requires a restart to take effect");
             azuAutoStoreItemWhitelist = Config.Bind("2 - Compatibility", "AzuAutoStore Item Whitelist", true, "Only allows the respective items to be stored in stack piles");
@@ -146,6 +153,7 @@ namespace DynamicStoragePiles {
             PieceManager.Instance.AddPiece(piece);
             pieces.Add(piece);
             allowedItemsByStack.Add(pieceName, craftItem);
+            allowedItemsByContainer.Add(piece.PiecePrefab.GetComponent<Container>().m_name, craftItem);
         }
 
         public void AddPiece(GameObject prefab, string craftItem, int amount) {
@@ -153,6 +161,7 @@ namespace DynamicStoragePiles {
             PieceManager.Instance.AddPiece(piece);
             pieces.Add(piece);
             allowedItemsByStack.Add(prefab.name, craftItem);
+            allowedItemsByContainer.Add(prefab.GetComponent<Container>().m_name, craftItem);
         }
 
         private void OnPiecesRegistered() {
