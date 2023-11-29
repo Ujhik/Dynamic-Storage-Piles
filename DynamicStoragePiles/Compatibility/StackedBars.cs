@@ -30,25 +30,5 @@ namespace DynamicStoragePiles.Compatibility {
             stack.name = newPrefabName;
             DynamicStoragePiles.Instance.AddCompatPiece(stack, resource, 3);
         }
-
-        public static void DisablePieceRecipes(bool disable) {
-            DynamicStoragePiles.EnablePieceRecipes("stack_tinbars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_copperbars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_bronzebars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_ironbars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_silverbars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_blackmetalbars", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("stack_flametalbars", !disable);
-        }
-
-        public static void DisableAdditionalPieceRecipes(bool disable) {
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_Tin", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_Copper", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_Bronze", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_Iron", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_Silver", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_BlackMetal", !disable);
-            DynamicStoragePiles.EnablePieceRecipes("MS_StackedBars_FlameMetal", !disable);
-        }
     }
 }
