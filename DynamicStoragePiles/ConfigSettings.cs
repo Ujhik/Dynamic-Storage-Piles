@@ -34,7 +34,7 @@ namespace DynamicStoragePiles {
             VanillaRecipeSetting = config.Bind(section, "Vanilla Stack Recipes", RecipeSetting.AllStoragePiles, $"Sets which pieces are placeable.{disableRecipeDescription}");
             VanillaRecipeSetting.SettingChanged += (sender, args) => DynamicStoragePiles.UpdateAllRecipes();
 
-            restrictDynamicPiles = config.Bind(section, "Restrict Container Item Type", true, new ConfigDescription("Only allows the respective items to be stored in stack piles. Synced with server", null, adminOnly));
+            restrictDynamicPiles = config.Bind(section, "Restrict Container Item Type", true, new ConfigDescription("Only allows the respective items to be stored in stack piles, so wood piles only accept wood etc.\nSynced with server", null, adminOnly));
 
             section = "2.0 - Compatibility AzuAutoStore";
 

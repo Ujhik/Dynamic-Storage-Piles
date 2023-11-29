@@ -29,8 +29,8 @@ Depending on the inventory fill level, more items will be displayed on the stack
 
 ### Mod Integration
 
-This mod integrates [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) as container stacks for ingots.
-Both mods must be installed for this to work, otherwise no additional stacks will be added to the game.
+This mod integrates both [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) and [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/) as container stacks for ingots.
+IngotStacks/StackedBars and DynamicStoragePiles must be installed for this to work, otherwise no ingot stacks will be added to the game.
 
 Each stack costs 3 ingots of the respective material to build:
 - Copper Stack
@@ -41,9 +41,11 @@ Each stack costs 3 ingots of the respective material to build:
 - Black Metal Stack
 - Flametal Stack
 
+Example of dynamic IngotStacks:
+
 ![IngotStacksShowcase](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/IngotStacksIntegrationShowcase.png)
 
-Big thanks to Richard for the awesome ingot stacks and possible integration!
+Big thanks to Richard and Azumatt for the awesome mods and possible integration!
 
 
 ## Manual Installation
@@ -51,19 +53,18 @@ Big thanks to Richard for the awesome ingot stacks and possible integration!
 This mod requires [BepInEx](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) and [Jötunn](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/).\
 Extract the content of `DynamicStoragePiles` into the `BepInEx/plugins` folder or any subfolder.
 
-If the mod is installed on the server, it will be enforced for all players.
-
+The mod must be installed on the server and all clients for it to work.
 
 ## Other mods
 
 ### Related mods
 
 - [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/), integrates with this mod if both are installed
+- [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/), integrates with this mod if both are installed
 - [Balrond Containers](https://valheim.thunderstore.io/package/Balrond/balrond_containers/)
 - [ArborStorage](https://valheim.thunderstore.io/package/coemt/ArborStorage/)
 - [Digitalroots GoldBars](https://valheim.thunderstore.io/package/Digitalroot/Digitalroots_GoldBars/)
 - [OdinsFoodBarrels](https://valheim.thunderstore.io/package/OdinPlus/OdinsFoodBarrels/)
-- [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/)
 
 
 ### Compatible mods
@@ -93,6 +94,12 @@ See [contributing](https://github.com/MSchmoecker/Dynamic-Storage-Piles/blob/mas
 
 
 ## Changelog
+
+0.5.0
+- Added [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/) integration when both mods are installed
+- Added the option to restrict containers to only accept items of the respective type, so wood piles only accept wood etc., enabled by default (thanks Searica)
+- Changed mod enforcement, now both the server and all clients need to have the mod installed. This is to prevent desync issues with the new container restrictions
+- Reworked config options, please update your settings as some old options are no longer used. To clean up unused options, remove the old config file
 
 0.4.0
 - Added [IngotStacks](https://valheim.thunderstore.io/package/MySoloTeam/IngotStacks/) integration when both mods are installed
