@@ -24,6 +24,8 @@ namespace DynamicStoragePiles {
 
         public static void Init(ConfigFile configFile) {
             config = configFile;
+
+            ConfigurationManagerAttributes adminOnly = new ConfigurationManagerAttributes { IsAdminOnly = true };
             string disableRecipeDescription = "\nCheats or world modifiers can ignore this setting. Existing pieces in the world are not affected";
             string restartDescription = "\nRequires a restart to take effect";
 
@@ -32,7 +34,7 @@ namespace DynamicStoragePiles {
             VanillaRecipeSetting = config.Bind(section, "Vanilla Stack Recipes", RecipeSetting.AllStoragePiles, $"Sets which pieces are placeable.{disableRecipeDescription}");
             VanillaRecipeSetting.SettingChanged += (sender, args) => DynamicStoragePiles.UpdateAllRecipes();
 
-            restrictDynamicPiles = config.Bind(section, "Restrict Container Item Type", true, "Only allows the respective items to be stored in stack piles");
+            restrictDynamicPiles = config.Bind(section, "Restrict Container Item Type", true, new ConfigDescription("Only allows the respective items to be stored in stack piles. Synced with server", null, adminOnly));
 
             section = "2.0 - Compatibility AzuAutoStore";
 
