@@ -64,7 +64,7 @@ namespace DynamicStoragePiles {
                 var result = item.PrefabName() == allowedItem;
                 if (!result) {
                     // Message player that item cannot be placed in container.
-                    var msg = $"{item.m_shared.m_name} cannnot be placed in {inventory.m_name}";
+                    var msg = $"{item.m_shared.m_name} cannot be placed in {inventory.m_name}";
                     Player.m_localPlayer?.Message(MessageHud.MessageType.Center, msg);
                 }
                 return result;
