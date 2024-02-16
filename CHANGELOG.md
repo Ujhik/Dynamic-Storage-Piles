@@ -1,5 +1,8 @@
 # Changelog
 
+0.5.1
+- Fixed typo when an item cannot be placed in a container
+
 0.5.0
 - Added [StackedBars](https://valheim.thunderstore.io/package/Azumatt/StackedBars/) integration when both mods are installed
 - Added the option to restrict containers to only accept items of the respective type, so wood piles only accept wood etc., enabled by default (thanks Searica)

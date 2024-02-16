@@ -75,10 +75,6 @@ The following mods are a few examples:
 - [AzuAutoStore](https://valheim.thunderstore.io/package/Azumatt/AzuAutoStore/), explicit compatibility to only store items into the respective stacks, configurable
 - [Quick Stack Store Sort Trash Restock](https://valheim.thunderstore.io/package/Goldenrevolver/Quick_Stack_Store_Sort_Trash_Restock/)
 
-### Incompatible mods
-
-- Valheim Plus: craft from chests displays a multiple of the available item count (a [PR with a fix](https://github.com/Grantapher/ValheimPlus/pull/21) was merged but is not released yet)
-
 
 ## Links
 
