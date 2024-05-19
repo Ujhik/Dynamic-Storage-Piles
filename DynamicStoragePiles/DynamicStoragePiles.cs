@@ -37,6 +37,7 @@ namespace DynamicStoragePiles {
             "coal_pile",
             "blackmarble_pile",
             "treasure_stack",
+            "bone_stack",
         };
 
         private static List<string> dynamicStacks = new List<string>();
@@ -53,6 +54,7 @@ namespace DynamicStoragePiles {
             AddStackPiece("MS_container_coal_pile", "Coal");
             AddStackPiece("MS_container_blackmarble_pile", "BlackMarble");
             AddStackPiece("MS_container_coin_pile", "Coins");
+            AddStackPiece("MS_container_bone_stack", "BoneFragments");
 
             ConfigSettings.Init(Config);
 
