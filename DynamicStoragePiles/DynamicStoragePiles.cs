@@ -38,6 +38,7 @@ namespace DynamicStoragePiles {
             "coal_pile",
             "blackmarble_pile",
             "grausten_pile",
+            "skull_pile",
             "treasure_stack",
             "bone_stack",
         };
@@ -57,8 +58,9 @@ namespace DynamicStoragePiles {
             AddStackPiece("MS_container_coal_pile", "Coal");
             AddStackPiece("MS_container_blackmarble_pile", "BlackMarble");
             AddStackPiece("MS_container_grausten_pile", "Grausten");
-            AddStackPiece("MS_container_coin_pile", "Coins");
+            AddStackPiece("MS_container_skull_pile", "Charredskull");
             AddStackPiece("MS_container_bone_stack", "BoneFragments");
+            AddStackPiece("MS_container_coin_pile", "Coins");
 
             ConfigSettings.Init(Config);
 
