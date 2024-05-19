@@ -12,14 +12,18 @@ No workbench or other crafting station is required, they can be built anywhere.
 Each stack has 10 slots that can be used to store any item.
 
 Vanilla stacks and piles models are used:
-- Wood stack
-- Fine wood stack
-- Core wood stack
-- Yggdrasil wood stack
-- Stone pile
-- Coal pile
-- Black marble pile
-- Coin pile
+- Wood Stack
+- Finewood Stack
+- Corewood Stack
+- Yggdrasil Wood Stack
+- Ashwood stack
+- Stone Pile
+- Coal Pile
+- Black Marble Pile
+- Grausten Pile
+- Pile of Skulls
+- Bone Stack
+- Coin Stack
 
 ![StackOverview](https://raw.githubusercontent.com/MSchmoecker/Dynamic-Storage-Piles/master/Docs/StackOverview.png)
 
