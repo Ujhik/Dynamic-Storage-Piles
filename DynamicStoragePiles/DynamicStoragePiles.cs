@@ -33,6 +33,7 @@ namespace DynamicStoragePiles {
             "wood_fine_stack",
             "wood_core_stack",
             "wood_yggdrasil_stack",
+            "blackwood_stack",
             "stone_pile",
             "coal_pile",
             "blackmarble_pile",
@@ -50,6 +51,7 @@ namespace DynamicStoragePiles {
             AddStackPiece("MS_container_finewood_stack", "FineWood");
             AddStackPiece("MS_container_corewood_stack", "RoundLog");
             AddStackPiece("MS_container_yggdrasil_wood_stack", "YggdrasilWood");
+            AddStackPiece("MS_container_blackwood_stack", "Blackwood");
             AddStackPiece("MS_container_stone_pile", "Stone");
             AddStackPiece("MS_container_coal_pile", "Coal");
             AddStackPiece("MS_container_blackmarble_pile", "BlackMarble");
