@@ -1,5 +1,8 @@
 # Changelog
 
+0.6.0
+- Added Bone Stack, Black Wood Stack, Grausten Pile and Skull Pile from the Ashlands update
+
 0.5.1
 - Fixed typo when an item cannot be placed in a container
 
