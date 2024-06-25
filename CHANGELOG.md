@@ -1,5 +1,8 @@
 # Changelog
 
+0.6.1
+- Fixed Ashwood stack was targeting the wrong vanilla prefab, resulting in removal of the stack with mods installed that initialize earlier
+
 0.6.0
 - Added Bone Stack, Black Wood Stack, Grausten Pile and Skull Pile from the Ashlands update
 
