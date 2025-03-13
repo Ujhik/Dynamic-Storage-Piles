@@ -110,12 +110,6 @@
     <VALHEIM_MANAGED>$(VALHEIM_INSTALL)/valheim_Data/Managed</VALHEIM_MANAGED>
     <UNITY_FOLDER>$(SolutionDir)DynamicStoragePilesUnity</UNITY_FOLDER>
   </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "E:\Modding Juegos\Valheim modding\DynamicStoragePiles\DynamicStoragePiles\bin\Debug\DynamicStoragePiles.dll" "E:\SteamLibrary\steamapps\common\Valheim\BepInEx\plugins\"</PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="BeforeDebug" BeforeTargets="Debug">
-    <Exec Command="xcopy /Y &quot;$(TargetDir)DynamicStoragePiles.dll&quot; &quot;E:\SteamLibrary\steamapps\common\Valheim\BepInEx\plugins\&quot;" />
-  </Target>
   <Target Name="AfterBuild">
     <CallTarget Condition="Exists('$(DEPLOY_FOLDER)')" Targets="Deploy" />
     <CallTarget Targets="CopyToUnity" />
