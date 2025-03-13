@@ -22,7 +22,8 @@ namespace DynamicStoragePiles {
     internal class DynamicStoragePiles : BaseUnityPlugin {
         public const string PluginName = "DynamicStoragePiles";
         public const string PluginGuid = "com.maxsch.valheim.DynamicStoragePiles";
-        public const string PluginVersion = "0.6.1";
+        public const string PluginVersion = "0.7.0";
+
         public const string PLUGIN_MORESTACKS_GUID = "ujhik.MoreStacks";
 
         public static DynamicStoragePiles Instance { get; private set; }
