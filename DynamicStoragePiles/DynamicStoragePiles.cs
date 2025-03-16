@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
@@ -11,10 +9,8 @@ using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace DynamicStoragePiles {
-    
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     [BepInDependency(PLUGIN_MORESTACKS_GUID, BepInDependency.DependencyFlags.SoftDependency)]
@@ -47,7 +43,7 @@ namespace DynamicStoragePiles {
             "grausten_pile",
             "skull_pile",
             "treasure_stack",
-            "bone_stack"
+            "bone_stack",
         };
 
         private static List<string> dynamicStacks = new List<string>();
@@ -75,19 +71,18 @@ namespace DynamicStoragePiles {
             PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
 
-            SynchronizationManager.OnConfigurationWindowClosed += onConfigurationChange;
-            SynchronizationManager.OnConfigurationSynchronized += onConfigurationChange;
+            SynchronizationManager.OnConfigurationWindowClosed += OnConfigurationChange;
+            SynchronizationManager.OnConfigurationSynchronized += OnConfigurationChange;
 
             harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
         }
 
-        private void onConfigurationChange(object obj, ConfigurationSynchronizationEventArgs attr) {
-            onConfigurationChange(); // Always update, no extra checks needed
+        private void OnConfigurationChange(object obj, ConfigurationSynchronizationEventArgs attr) {
+            OnConfigurationChange(); // Always update, no extra checks needed
         }
 
-        private void onConfigurationChange() {
-            Jotunn.Logger.LogInfo("Configuration changed");
+        private void OnConfigurationChange() {
             UpdateAllRecipes();
         }
 

@@ -8,16 +8,15 @@ using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using UnityEngine;
+using Logger = Jotunn.Logger;
 
 namespace DynamicStoragePiles.Compatibility {
-    using UObject = UnityEngine.Object;
-
     public static class MoreStacks {
         public static List<string> staticStacks = new List<string>();
         public static List<string> dynamicStacks = new List<string>();
         private static BaseUnityPlugin moreStacksInstance = null;
 
-        private static Dictionary<string, string> vanillaNameToDynamicStorageNameMap = new Dictionary<string, string>{
+        private static Dictionary<string, string> vanillaNameToDynamicStorageNameMap = new Dictionary<string, string> {
             { "wood_fine_stack", "finewood_stack" },
             { "wood_core_stack", "corewood_stack" },
             { "wood_yggdrasil_stack", "yggdrasil_wood_stack" },
@@ -25,13 +24,10 @@ namespace DynamicStoragePiles.Compatibility {
         };
 
         public static void Init() {
-            if (moreStacksInstance == null && Chainloader.PluginInfos.TryGetValue(DynamicStoragePiles.PLUGIN_MORESTACKS_GUID, out var pluginInfo)) {
-                moreStacksInstance = pluginInfo.Instance as BaseUnityPlugin;
-                if (moreStacksInstance != null) {
-                    //Jotunn.Logger.LogInfo($"Stored reference to mod: {DynamicStoragePiles.PLUGIN_MORESTACKS_GUID}, Instance: {moreStacksInstance}");
-                }
-                else {
-                    Debug.LogWarning($"Failed to cast mod instance for '{DynamicStoragePiles.PLUGIN_MORESTACKS_GUID}'.");
+            if (!moreStacksInstance && Chainloader.PluginInfos.TryGetValue(DynamicStoragePiles.PLUGIN_MORESTACKS_GUID, out var pluginInfo)) {
+                moreStacksInstance = pluginInfo.Instance;
+                if (!moreStacksInstance) {
+                    Logger.LogWarning($"Failed to cast mod instance for '{DynamicStoragePiles.PLUGIN_MORESTACKS_GUID}'.");
                     return;
                 }
             }
@@ -55,9 +51,8 @@ namespace DynamicStoragePiles.Compatibility {
                         ConvertToPiece(idStackToDuplicate, idStackMaterial);
                     }
                 }
-            }
-            else {
-                Debug.LogWarning($"{DynamicStoragePiles.PLUGIN_MORESTACKS_GUID}: Failed to retrieve stackInfoList field via reflection, dynamic piles could not be generated");
+            } else {
+                Logger.LogWarning($"{DynamicStoragePiles.PLUGIN_MORESTACKS_GUID}: Failed to retrieve stackInfoList field via reflection, dynamic piles could not be generated");
             }
         }
 
