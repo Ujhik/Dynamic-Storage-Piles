@@ -192,7 +192,7 @@ namespace DynamicStoragePiles {
                 Width = 64,
                 Height = 64,
                 Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0f, -90f, 0f),
-                UseCache = false,
+                UseCache = true,
                 TargetPlugin = Info.Metadata,
             });
 
