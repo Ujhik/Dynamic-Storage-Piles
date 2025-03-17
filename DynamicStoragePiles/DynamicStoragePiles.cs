@@ -71,19 +71,8 @@ namespace DynamicStoragePiles {
             PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
 
-            SynchronizationManager.OnConfigurationWindowClosed += OnConfigurationChange;
-            SynchronizationManager.OnConfigurationSynchronized += OnConfigurationChange;
-
             harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
-        }
-
-        private void OnConfigurationChange(object obj, ConfigurationSynchronizationEventArgs attr) {
-            OnConfigurationChange(); // Always update, no extra checks needed
-        }
-
-        private void OnConfigurationChange() {
-            UpdateAllRecipes();
         }
 
         private void Start() {
