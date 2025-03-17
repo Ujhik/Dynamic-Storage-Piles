@@ -94,7 +94,15 @@ namespace DynamicStoragePiles.Compatibility {
                 renderer.sharedMaterial = newMaterial;
             }
 
-            DynamicStoragePiles.Instance.AddCompatPiece(newStack, materialPrefabId, 10, true);
+            DynamicStoragePiles.Instance.AddCompatPiece(newStack, materialPrefabId, GetMaterialCostForPiece(materialPrefabId), true);
+        }
+
+        public static int GetMaterialCostForPiece(string materialPrefabId) {
+            if (materialPrefabId.Contains("Ore") || materialPrefabId.Contains("Scrap")) {
+                return 3;
+            }
+
+            return 10;
         }
     }
 }
