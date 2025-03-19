@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Configuration;
 using HarmonyLib;
+using static DynamicStoragePiles.ConfigSettings;
 
 namespace DynamicStoragePiles {
     public static class ConfigSettings {
         private static ConfigFile config;
+
+        public static event Action OnVisualConfigurationChanges; // Event for stack visual updates
 
         public static ConfigEntry<RecipeSetting> VanillaRecipeSetting { get; private set; }
         public static ConfigEntry<RecipeSetting> IngotStacksRecipeSetting { get; private set; }
@@ -17,10 +20,17 @@ namespace DynamicStoragePiles {
         public static ConfigEntry<bool> azuAutoStoreItemWhitelist;
         public static ConfigEntry<bool> restrictDynamicPiles;
 
+        public static ConfigEntry<CalculateVisualStackEnum> calculateVisualStackSettings { get; private set; }
+
         public enum RecipeSetting {
             AllStoragePiles,
             OnlyDynamicStoragePiles,
             OnlyOriginalStoragePiles,
+        }
+
+        public enum CalculateVisualStackEnum {
+            ByOccupiedSlots,
+            ByNumberOfItems,
         }
 
         public static void Init(ConfigFile configFile) {
@@ -37,6 +47,8 @@ namespace DynamicStoragePiles {
 
             restrictDynamicPiles = config.Bind(section, "Restrict Container Item Type", true, new ConfigDescription("Only allows the respective items to be stored in stack piles, so wood piles only accept wood etc.\nSynced with server", null, adminOnly));
 
+            calculateVisualStackSettings = config.Bind(section, "Visual Stack Calculation", CalculateVisualStackEnum.ByOccupiedSlots, $"How the visuals of the stacks are calculated.");
+            calculateVisualStackSettings.SettingChanged += (sender, args) => OnVisualConfigurationChanges?.Invoke(); 
             section = "2.0 - Compatibility AzuAutoStore";
 
             azuAutoStoreCompat = config.Bind(section, "Enable Compatibility", true, $"Enables compatibility with AzuAutoStore.{restartDescription}");
